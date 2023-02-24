@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jobsy_flutter/Blocs/Authentication/authentication_bloc.dart';
 import 'package:jobsy_flutter/Blocs/Login/auth_bloc.dart';
-import 'package:jobsy_flutter/Repositories/Repo.dart';
+import 'package:jobsy_flutter/Firebase/Authentication.dart';
 import 'package:jobsy_flutter/Ui/Authentication/Widget/InputField.dart';
 import 'package:jobsy_flutter/Ui/Home/HomePage.dart';
 import 'package:jobsy_flutter/Ui/Utilities/ColorConstants.dart';
@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage>
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthBloc(
-          homeRepo: HomeRepo(), authenticationBloc: _authenticationBloc)
+          firebaseAuthentication: FirebaseAuthentication(), authenticationBloc: _authenticationBloc)
         ..add(AuthStarted()),
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -302,7 +302,7 @@ class _LoginPageState extends State<LoginPage>
           });
         }
 
-        if (state is RegisterInitial) {
+        
           return Container(
               width: double.infinity,
               constraints: BoxConstraints(
@@ -334,7 +334,7 @@ class _LoginPageState extends State<LoginPage>
                   const SizedBox(
                     height: 15,
                   ),
-                  state is LoginLoading
+                  state is RegisterLoading
                       ? const Center(
                           child: CircularProgressIndicator(
                             strokeWidth: 3,
@@ -399,11 +399,7 @@ class _LoginPageState extends State<LoginPage>
                   ),
                 ],
               ));
-        } else {
-          return const Center(
-            child: SingleChildScrollView(),
-          );
-        }
+       
       },
     );
   }
@@ -411,7 +407,7 @@ class _LoginPageState extends State<LoginPage>
   Widget _loginScreen(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthenticationBloc(
-          homeRepo: HomeRepo(),
+       
           sharedPreferencesManager: SharedPreferencesManager()),
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {

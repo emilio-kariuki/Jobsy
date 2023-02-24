@@ -1,16 +1,23 @@
 import 'dart:ui';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:jobsy_flutter/Blocs/Authentication/authentication_bloc.dart';
-import 'package:jobsy_flutter/Repositories/Repo.dart';
 import 'package:jobsy_flutter/Ui/Authentication/SplashPage.dart';
-import 'package:jobsy_flutter/Ui/Authentication/auth.dart';
 import 'package:jobsy_flutter/Ui/Home/HomePage.dart';
 import 'package:jobsy_flutter/Ui/Utilities/SharedPreferenceManager.dart';
+import 'package:jobsy_flutter/firebase_options.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+
   runApp(const App());
 }
 
@@ -26,12 +33,10 @@ class _AppState extends State<App> {
 
   @override
   void initState() {
-   
-    authenticationBloc = AuthenticationBloc(
-        homeRepo: HomeRepo(),
-        sharedPreferencesManager: SharedPreferencesManager())
-      ..add(AppStarted());
-       super.initState();
+    authenticationBloc =
+        AuthenticationBloc(sharedPreferencesManager: SharedPreferencesManager())
+          ..add(AppStarted());
+    super.initState();
   }
 
   @override

@@ -41,7 +41,12 @@ dependencies:
   equatable: ^2.0.5
   shared_preferences: ^2.0.17
   bloc: ^8.1.1
-  image_picker_web: ^3.0.0+1
+  firebase_core: ^2.7.0
+  cloud_firestore: ^4.4.3
+  firebase_auth: ^4.2.9
+  firebase_storage: ^11.0.14
+  image_network: ^2.5.1
+  keep_keyboard_popup_menu: ^2.0.5
 
 dev_dependencies:
   flutter_test:
