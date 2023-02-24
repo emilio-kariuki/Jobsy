@@ -41,28 +41,34 @@ class Jobs3Grid extends StatelessWidget {
             }
             if (snapshot.hasData) {
               final docs = snapshot.data!.docs;
-              out = GridView.builder(
-                itemCount: docs.length,
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisSpacing: 20,
-                  crossAxisSpacing: 10,
-                  crossAxisCount: Responsive.isDesktop(context) ? 4 : 3,
+              out = Expanded(
+                child: GridView.builder(
+                  itemCount: docs.length,
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 10,
+                    crossAxisCount: Responsive.isDesktop(context) ? 4 : 3,
+                  ),
+                  itemBuilder: (context, index) {
+                    Map<String, dynamic> data =
+                        docs[index].data() as Map<String, dynamic>;
+                    return JobCard(
+                      jobId: docs[index].id,
+                      image: data['image'],
+                      sender: "Emilio kariuki",
+                      role: "Developer",
+                      title: data['name'],
+                      description: data['description'] ?? "",
+                      amount: data['amount'],
+                      location: data['location'],
+                      userImage: data['userImage'] ?? "",
+                      userName: data['userName'] ?? "",
+                      userRole: data['userRole'] ?? "",
+                      time: data['createdAt'] ?? "",
+                    );
+                  },
                 ),
-                itemBuilder: (context, index) {
-                  Map<String, dynamic> data =
-                      docs[index].data() as Map<String, dynamic>;
-                  return JobCard(
-                    jobId: docs[index].id,
-                    image: data['image'],
-                    sender: "Emilio kariuki",
-                    role: "Developer",
-                    title: data['name'],
-                    description: data['description'] ?? "",
-                    amount: data['amount'],
-                    location: data['location'],
-                  );
-                },
               );
             }
             return out;

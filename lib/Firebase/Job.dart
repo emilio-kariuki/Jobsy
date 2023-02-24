@@ -15,6 +15,9 @@ class FirebaseJob {
         "createdAt": job.createdAt,
         "amount": job.amount,
         "belongsTo": job.belongsTo,
+        "userName": job.userName,
+        "userRole": job.userRole,
+        "userImage": job.userImage,
       }, SetOptions(merge: true));
 
       // ignore: use_build_context_synchronously

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:jobsy_flutter/Blocs/ShowPost/show_post_bloc.dart';
 import 'package:jobsy_flutter/Firebase/Job.dart';
 import 'package:jobsy_flutter/Model/JobModel.dart';
 import 'package:jobsy_flutter/Ui/Utilities/ColorConstants.dart';
+import 'package:jobsy_flutter/Ui/Utilities/SharedPreferenceManager.dart';
 
 import '../../../Blocs/Favourite/favourites_bloc.dart';
 
@@ -19,6 +21,10 @@ class JobCard extends StatefulWidget {
   final String description;
   final String location;
   final String jobId;
+  final String userName;
+  final String userImage;
+  final String userRole;
+  final Timestamp time;
   const JobCard(
       {super.key,
       required this.image,
@@ -28,7 +34,11 @@ class JobCard extends StatefulWidget {
       required this.amount,
       required this.description,
       required this.location,
-      required this.jobId});
+      required this.jobId,
+      required this.userName,
+      required this.userImage,
+      required this.userRole,
+       required this.time});
 
   @override
   State<JobCard> createState() => _JobCardState();
@@ -47,16 +57,14 @@ class _JobCardState extends State<JobCard> {
       child: Container(
         // padding: const EdgeInsets.only(),
         width: MediaQuery.of(context).size.width * 0.15,
-        height: MediaQuery.of(context).size.height ,
+        height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           color: secondaryColor,
           borderRadius: BorderRadius.circular(5),
         ),
         child: Column(
-          
           children: [
             Stack(
-              
               children: [
                 BlocBuilder<ShowDetailsBloc, ShowDetailsState>(
                   builder: (context, state) {
@@ -94,7 +102,7 @@ class _JobCardState extends State<JobCard> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
-                          onTap: () {
+                          onTap: () async {
                             BlocProvider.of<FavouritesBloc>(context)
                                 .add(FavouriteAdded(
                                     job: Job(
@@ -102,10 +110,17 @@ class _JobCardState extends State<JobCard> {
                                       description: widget.description,
                                       image: widget.image,
                                       location: widget.location,
-                                      createdAt: DateTime.now(),
+                                      createdAt: Timestamp.now(),
                                       amount: widget.amount,
                                       belongsTo: FirebaseAuth
                                           .instance.currentUser!.uid,
+                                      userImage:
+                                          await SharedPreferencesManager()
+                                              .getUserImage(),
+                                      userName: await SharedPreferencesManager()
+                                          .getUserName(),
+                                      userRole: await SharedPreferencesManager()
+                                          .getRole(),
                                     ),
                                     context: context));
                           },
@@ -141,12 +156,30 @@ class _JobCardState extends State<JobCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          CircleAvatar(
-                            radius: 17,
-                            backgroundImage: NetworkImage(widget.image),
+                          ImageNetwork(
+                            image: widget.userImage,
+                            height: 30,
+                            width: 30,
+                            borderRadius: BorderRadius.circular(100),
+                            duration: 10,
+                            onPointer: true,
+                            debugPrint: false,
+                            fullScreen: false,
+                            curve: Curves.bounceIn,
+                            onLoading: const CircularProgressIndicator(
+                              color: Colors.indigoAccent,
+                            ),
+                            onError: const Icon(
+                              Icons.error,
+                              color: Colors.red,
+                            ),
+                            onTap: () {
+                              debugPrint("©gabriel_patrick_souza");
+                            },
                           ),
                           const SizedBox(
                             width: 10,
@@ -156,7 +189,7 @@ class _JobCardState extends State<JobCard> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.sender,
+                                widget.userName,
                                 style: const TextStyle(
                                     color: Colors.white, fontSize: 12),
                               ),
@@ -164,7 +197,7 @@ class _JobCardState extends State<JobCard> {
                                 height: 1,
                               ),
                               Text(
-                                widget.role,
+                                widget.userRole,
                                 style: const TextStyle(
                                     color: Colors.white54, fontSize: 11),
                               ),
@@ -173,7 +206,12 @@ class _JobCardState extends State<JobCard> {
                         ],
                       ),
                       Text(
-                        "2 days ago",
+                        // ignore: unrelated_type_equality_checks
+                        Timestamp.now().toDate().difference(widget.time.toDate()).inDays == 0
+                            ? "Today"
+                            : Timestamp.now().toDate().difference(widget.time.toDate()).inDays == 1
+                                ? "Yesterday"
+                                : "${Timestamp.now().toDate().difference(widget.time.toDate()).inDays} days ago",
                         style: Theme.of(context)
                             .textTheme
                             .bodyLarge!

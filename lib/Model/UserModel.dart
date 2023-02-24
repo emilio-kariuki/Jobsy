@@ -30,7 +30,7 @@ class UserModel {
   String? image;
   String? location;
   String? role;
-  DateTime createdAt;
+  dynamic createdAt;
   String? amountEarned;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(

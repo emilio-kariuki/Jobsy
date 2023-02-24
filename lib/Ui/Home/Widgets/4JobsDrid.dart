@@ -77,6 +77,10 @@ class JobsGrid extends StatelessWidget {
                           description: data['description'] ?? "",
                           amount: data['amount'] ?? "0",
                           location: data['location'] ?? "No location",
+                          userImage: data['userImage'] ?? "",
+                          userName: data['userName'] ?? "",
+                          userRole: data['userRole'] ?? "",
+                          time: data['createdAt'] ?? "",
                         );
                           },
                         ),
@@ -187,7 +191,7 @@ class JobsGrid extends StatelessWidget {
                                                 "Emilio kariuki",
                                                 style: TextStyle(
                                                     color: Colors.white,
-                                                    fontSize: 12),
+                                                    fontSize: 15),
                                               ),
                                               SizedBox(
                                                 height: 1,
@@ -196,12 +200,13 @@ class JobsGrid extends StatelessWidget {
                                                 "Developer",
                                                 style: TextStyle(
                                                     color: Colors.white54,
-                                                    fontSize: 11),
+                                                    fontSize: 12),
                                               ),
                                             ],
                                           )
                                         ],
                                       ),
+                                      const Spacer(),
                                       Text(
                                         "2 days ago",
                                         style: Theme.of(context)

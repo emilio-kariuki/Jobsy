@@ -18,8 +18,7 @@ class FirebaseAuthentication {
         "role": user.role,
         "createdAt": user.createdAt,
         "amountEarned": user.amountEarned,
-        
-      },  
+      },
     );
   }
 
@@ -28,7 +27,6 @@ class FirebaseAuthentication {
     await _firestoreInstance.collection("user").doc(userId).get().then((value) {
       data = value.data();
     });
-
     return UserModel.fromJson(data);
   }
 }

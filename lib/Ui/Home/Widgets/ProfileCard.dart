@@ -3,7 +3,8 @@ import 'package:jobsy_flutter/Ui/Utilities/ColorConstants.dart';
 import 'package:jobsy_flutter/Ui/Utilities/Responsive.dart';
 
 class ProfileCard extends StatelessWidget {
-  const ProfileCard({super.key});
+  final String name;
+  const ProfileCard({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +25,11 @@ class ProfileCard extends StatelessWidget {
             backgroundImage: AssetImage("lib/Assets/bulb.jpg"),
           ),
           if (!Responsive.isMobile(context))
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+           Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
               child: Text(
-                "Emilio ",
-                style: TextStyle(color: Colors.white),
+                name,
+                style: const TextStyle(color: Colors.white),
               ),
             ),
         ],
