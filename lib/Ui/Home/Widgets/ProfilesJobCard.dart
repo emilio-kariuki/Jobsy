@@ -46,6 +46,7 @@ class ProfileJobCard extends StatelessWidget {
             Stack(
               children: [
                 Expanded(
+                  flex: 5,
                   child: ImageNetwork(
                     image: image,
                     height: 130,

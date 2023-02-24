@@ -47,43 +47,44 @@ class _JobCardState extends State<JobCard> {
       child: Container(
         // padding: const EdgeInsets.only(),
         width: MediaQuery.of(context).size.width * 0.15,
+        height: MediaQuery.of(context).size.height ,
         decoration: BoxDecoration(
           color: secondaryColor,
           borderRadius: BorderRadius.circular(5),
         ),
         child: Column(
+          
           children: [
             Stack(
+              
               children: [
-                Expanded(
-                  child: BlocBuilder<ShowDetailsBloc, ShowDetailsState>(
-                    builder: (context, state) {
-                      return ImageNetwork(
-                        image: widget.image,
-                        height: 130,
-                        width: MediaQuery.of(context).size.width / 4,
-                        duration: 10,
-                        onPointer: true,
-                        debugPrint: false,
-                        fullScreen: false,
-                        onLoading: const CircularProgressIndicator(
-                          color: Colors.indigoAccent,
-                        ),
-                        onError: const Icon(
-                          Icons.error,
-                          color: Colors.red,
-                        ),
-                        onTap: () {
-                          state is ShowDetailsInitial
-                              ? BlocProvider.of<ShowDetailsBloc>(context)
-                                  .add(ShowDetailsPressed(id: widget.jobId))
-                              : BlocProvider.of<ShowDetailsBloc>(context).add(
-                                  RemoveDetailsPressed(),
-                                );
-                        },
-                      );
-                    },
-                  ),
+                BlocBuilder<ShowDetailsBloc, ShowDetailsState>(
+                  builder: (context, state) {
+                    return ImageNetwork(
+                      image: widget.image,
+                      height: 130,
+                      width: MediaQuery.of(context).size.width / 4,
+                      duration: 10,
+                      onPointer: true,
+                      debugPrint: false,
+                      fullScreen: false,
+                      onLoading: const CircularProgressIndicator(
+                        color: Colors.indigoAccent,
+                      ),
+                      onError: const Icon(
+                        Icons.error,
+                        color: Colors.red,
+                      ),
+                      onTap: () {
+                        state is ShowDetailsInitial
+                            ? BlocProvider.of<ShowDetailsBloc>(context)
+                                .add(ShowDetailsPressed(id: widget.jobId))
+                            : BlocProvider.of<ShowDetailsBloc>(context).add(
+                                RemoveDetailsPressed(),
+                              );
+                      },
+                    );
+                  },
                 ),
                 BlocBuilder<FavouritesBloc, FavouritesState>(
                   builder: (context, state) {
@@ -141,37 +142,35 @@ class _JobCardState extends State<JobCard> {
                 children: [
                   Row(
                     children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 17,
-                              backgroundImage: NetworkImage(widget.image),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  widget.sender,
-                                  style: const TextStyle(
-                                      color: Colors.white, fontSize: 12),
-                                ),
-                                const SizedBox(
-                                  height: 1,
-                                ),
-                                Text(
-                                  widget.role,
-                                  style: const TextStyle(
-                                      color: Colors.white54, fontSize: 11),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 17,
+                            backgroundImage: NetworkImage(widget.image),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.sender,
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 12),
+                              ),
+                              const SizedBox(
+                                height: 1,
+                              ),
+                              Text(
+                                widget.role,
+                                style: const TextStyle(
+                                    color: Colors.white54, fontSize: 11),
+                              ),
+                            ],
+                          )
+                        ],
                       ),
                       Text(
                         "2 days ago",

@@ -52,34 +52,35 @@ class JobsGrid extends StatelessWidget {
                   return Row(
                     children: [
                       Expanded(
-                          child: GridView.builder(
-                        itemCount: docs.length,
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          mainAxisSpacing: 20,
-                          crossAxisSpacing: 10,
-                          crossAxisCount: Responsive.isDesktop(context)
-                              ? (state is ShowDetailsInitial ? 5 : 3)
-                              : state is ShowDetailsInitial
-                                  ? 4
-                                  : 2,
+                        child: GridView.builder(
+                          itemCount: docs.length,
+                          shrinkWrap: true,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 10,
+                        crossAxisCount: Responsive.isDesktop(context)
+                            ? (state is ShowDetailsInitial ? 5 : 3)
+                            : state is ShowDetailsInitial
+                                ? 4
+                                : 2,
+                          ),
+                          itemBuilder: (context, index) {
+                        Map<String, dynamic> data =
+                            docs[index].data() as Map<String, dynamic>;
+                                        
+                        return JobCard(
+                          jobId: docs[index].id,
+                          image: data['image'],
+                          sender: "Emilio kariuki",
+                          role: "Developer",
+                          title: data['name'] ?? "No title",
+                          description: data['description'] ?? "",
+                          amount: data['amount'] ?? "0",
+                          location: data['location'] ?? "No location",
+                        );
+                          },
                         ),
-                        itemBuilder: (context, index) {
-                          Map<String, dynamic> data =
-                              docs[index].data() as Map<String, dynamic>;
-
-                          return JobCard(
-                            jobId: docs[index].id,
-                            image: data['image'],
-                            sender: "Emilio kariuki",
-                            role: "Developer",
-                            title: data['name'] ?? "No title",
-                            description: data['description'] ?? "",
-                            amount: data['amount'] ?? "0",
-                            location: data['location'] ?? "No location",
-                          );
-                        },
-                      )),
+                      ),
                       state is ShowDetailsLoaded
                           ? Container(
                               padding:
@@ -151,57 +152,55 @@ class JobsGrid extends StatelessWidget {
                                   ),
                                   Row(
                                     children: [
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            ImageNetwork(
-                                              borderRadius:
-                                                  BorderRadius.circular(100),
-                                              image: state.job.image,
-                                              height: 30,
-                                              width: 30,
-                                              duration: 10,
-                                              onPointer: true,
-                                              debugPrint: false,
-                                              fullScreen: false,
-                                              onLoading:
-                                                  const CircularProgressIndicator(
-                                                color: Colors.indigoAccent,
-                                              ),
-                                              onError: const Icon(
-                                                Icons.error,
-                                                color: Colors.red,
-                                              ),
-                                              onTap: () {},
+                                      Row(
+                                        children: [
+                                          ImageNetwork(
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                            image: state.job.image,
+                                            height: 30,
+                                            width: 30,
+                                            duration: 10,
+                                            onPointer: true,
+                                            debugPrint: false,
+                                            fullScreen: false,
+                                            onLoading:
+                                                const CircularProgressIndicator(
+                                              color: Colors.indigoAccent,
                                             ),
-                                            const SizedBox(
-                                              width: 10,
+                                            onError: const Icon(
+                                              Icons.error,
+                                              color: Colors.red,
                                             ),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: const [
-                                                Text(
-                                                  "Emilio kariuki",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 12),
-                                                ),
-                                                SizedBox(
-                                                  height: 1,
-                                                ),
-                                                Text(
-                                                  "Developer",
-                                                  style: TextStyle(
-                                                      color: Colors.white54,
-                                                      fontSize: 11),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
+                                            onTap: () {},
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: const [
+                                              Text(
+                                                "Emilio kariuki",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12),
+                                              ),
+                                              SizedBox(
+                                                height: 1,
+                                              ),
+                                              Text(
+                                                "Developer",
+                                                style: TextStyle(
+                                                    color: Colors.white54,
+                                                    fontSize: 11),
+                                              ),
+                                            ],
+                                          )
+                                        ],
                                       ),
                                       Text(
                                         "2 days ago",
