@@ -12,6 +12,6 @@ class ShowDetailsInitial extends ShowDetailsState {}
 class ShowDetailsLoading extends ShowDetailsState {}
 
 class ShowDetailsLoaded extends ShowDetailsState {
-  final Job job;
+  final JobModel job;
   ShowDetailsLoaded({required this.job});
 }

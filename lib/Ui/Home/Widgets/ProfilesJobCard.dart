@@ -17,18 +17,19 @@ class ProfileJobCard extends StatelessWidget {
   final String location;
   final String jobId;
   final String collection;
-  const ProfileJobCard({
-    super.key,
-    required this.image,
-    required this.sender,
-    required this.role,
-    required this.title,
-    required this.amount,
-    required this.description,
-    required this.location,
-    required this.jobId,
-    required this.collection,
-  });
+  int index;
+  ProfileJobCard(
+      {super.key,
+      required this.image,
+      required this.sender,
+      required this.role,
+      required this.title,
+      required this.amount,
+      required this.description,
+      required this.location,
+      required this.jobId,
+      required this.collection,
+      this.index = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class ProfileJobCard extends StatelessWidget {
       create: (context) => FavouritesBloc(),
       child: Container(
         // padding: const EdgeInsets.only(),
-        width: MediaQuery.of(context).size.width /5,
+        width: MediaQuery.of(context).size.width / 5,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           color: secondaryColor,
@@ -49,7 +50,7 @@ class ProfileJobCard extends StatelessWidget {
                 ImageNetwork(
                   image: image,
                   height: 130,
-                  width: MediaQuery.of(context).size.width /4,
+                  width: MediaQuery.of(context).size.width / 4,
                   duration: 10,
                   onPointer: true,
                   debugPrint: false,
@@ -67,50 +68,50 @@ class ProfileJobCard extends StatelessWidget {
                   },
                 ),
                 Positioned.fill(
-                  top: 10,
-                  right: 10,
+                    top: 10,
+                    right: 10,
                     child: Align(
-                  alignment: Alignment.topRight,
-                  child: BlocBuilder<FavouritesBloc, FavouritesState>(
-                    builder: (context, state) {
-                      return PopupMenuButton<menuValues>(
-                        color: bgColor,
-                        onSelected: (value) {
-                          switch (value) {
-                            case menuValues.delete:
-                              BlocProvider.of<FavouritesBloc>(context).add(
-                                  FavouriteRemoved(
-                                      id: jobId, collection: collection));
-                              break;
-                            case menuValues.edit:
-                              debugPrint("Edit");
-                              break;
-                          }
+                      alignment: Alignment.topRight,
+                      child: BlocBuilder<FavouritesBloc, FavouritesState>(
+                        builder: (context, state) {
+                          return PopupMenuButton<menuValues>(
+                            color: bgColor,
+                            onSelected: (value) {
+                              switch (value) {
+                                case menuValues.delete:
+                                  BlocProvider.of<FavouritesBloc>(context)
+                                      .add(FavouriteRemoved(index: index));
+
+                                  break;
+                                case menuValues.edit:
+                                  debugPrint("Edit");
+                                  break;
+                              }
+                            },
+                            child: const Icon(
+                              Icons.more_vert,
+                              color: Colors.white,
+                            ),
+                            itemBuilder: (context) => [
+                              const PopupMenuItem(
+                                value: menuValues.edit,
+                                child: Text(
+                                  "Edit",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              const PopupMenuItem(
+                                value: menuValues.delete,
+                                child: Text(
+                                  "Delete",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          );
                         },
-                        child: const Icon(
-                          Icons.more_vert,
-                          color: Colors.white,
-                        ),
-                        itemBuilder: (context) => [
-                          const PopupMenuItem(
-                            value: menuValues.edit,
-                            child: Text(
-                              "Edit",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                          const PopupMenuItem(
-                            value: menuValues.delete,
-                            child: Text(
-                              "Delete",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ))
+                      ),
+                    ))
               ],
             ),
             const SizedBox(

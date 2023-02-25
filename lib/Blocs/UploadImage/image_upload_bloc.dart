@@ -22,6 +22,18 @@ class ImageUploadBloc extends Bloc<ImageUploadEvent, ImageUploadState> {
             print(e.toString());
           }
         }
+
+        if (event is UpdateProfile) {
+          emit(ImageUploadLoading());
+          try {
+            String url = await Repository()
+                .updateProfilePic(image: event.image, path: event.path);
+            emit(ImageUploadSuccess(imageUrl: url));
+          } catch (e) {
+            emit(ImageUploadFailure(error: e.toString()));
+            print(e.toString());
+          }
+        }
       },
     );
   }

@@ -3,6 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'package:jobsy_flutter/Firebase/Job.dart';
 import 'package:jobsy_flutter/Model/JobModel.dart';
 
+import '../../Model/JobDetailsModel.dart';
+
 part 'show_details_event.dart';
 part 'show_details_state.dart';
 
@@ -15,7 +17,7 @@ class ShowDetailsBloc extends Bloc<ShowDetailsEvent, ShowDetailsState> {
             .then((value) async {
           emit(ShowDetailsLoading());
           try {
-            Job job = await FirebaseJob().getJobDetails(id: event.id);
+            JobModel job = await FirebaseJob().getJobDetails(id: event.id);
             emit(ShowDetailsLoaded(job: job));
           } catch (e) {
             print(e.toString());

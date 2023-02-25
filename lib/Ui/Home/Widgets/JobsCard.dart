@@ -5,8 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_network/image_network.dart';
 import 'package:jobsy_flutter/Blocs/ShowDetails/show_details_bloc.dart';
 import 'package:jobsy_flutter/Blocs/ShowPost/show_post_bloc.dart';
+import 'package:jobsy_flutter/Firebase/Authentication.dart';
 import 'package:jobsy_flutter/Firebase/Job.dart';
+import 'package:jobsy_flutter/Model/JobDetailsModel.dart';
 import 'package:jobsy_flutter/Model/JobModel.dart';
+import 'package:jobsy_flutter/Model/UserModel.dart';
 import 'package:jobsy_flutter/Ui/Utilities/ColorConstants.dart';
 import 'package:jobsy_flutter/Ui/Utilities/SharedPreferenceManager.dart';
 
@@ -25,6 +28,7 @@ class JobCard extends StatefulWidget {
   final String userImage;
   final String userRole;
   final Timestamp time;
+  final String belongsTo;
   const JobCard(
       {super.key,
       required this.image,
@@ -38,7 +42,8 @@ class JobCard extends StatefulWidget {
       required this.userName,
       required this.userImage,
       required this.userRole,
-       required this.time});
+      required this.time,
+      required this.belongsTo});
 
   @override
   State<JobCard> createState() => _JobCardState();
@@ -56,7 +61,7 @@ class _JobCardState extends State<JobCard> {
       ],
       child: Container(
         // padding: const EdgeInsets.only(),
-        width: MediaQuery.of(context).size.width * 0.15,
+        width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           color: secondaryColor,
@@ -105,7 +110,7 @@ class _JobCardState extends State<JobCard> {
                           onTap: () async {
                             BlocProvider.of<FavouritesBloc>(context)
                                 .add(FavouriteAdded(
-                                    job: Job(
+                                    job: JobModel(
                                       name: widget.title,
                                       description: widget.description,
                                       image: widget.image,
@@ -178,7 +183,88 @@ class _JobCardState extends State<JobCard> {
                               color: Colors.red,
                             ),
                             onTap: () {
-                              debugPrint("©gabriel_patrick_souza");
+                              return showDialog<void>(
+                                  context: context,
+                                  barrierDismissible: true,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      content: SizedBox(
+                                        height: 300,
+                                        width: 250,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            ImageNetwork(
+                                              image: widget.userImage,
+                                              height: 40,
+                                              width: 40,
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              duration: 10,
+                                              onPointer: true,
+                                              debugPrint: false,
+                                              fullScreen: false,
+                                              curve: Curves.bounceIn,
+                                              onLoading:
+                                                  const CircularProgressIndicator(
+                                                color: Colors.indigoAccent,
+                                              ),
+                                              onError: const Icon(
+                                                Icons.error,
+                                                color: Colors.red,
+                                              ),
+                                              onTap: () {
+                                                debugPrint(
+                                                    "©gabriel_patrick_souza");
+                                              },
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              widget.userName,
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18),
+                                            ),
+                                            Text(
+                                              widget.userRole,
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 13),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            FutureBuilder<UserModel>(
+                                                future: FirebaseAuthentication()
+                                                    .getUser(userId: widget.belongsTo),
+                                                builder: (context, snapshot) {
+                                                  if (snapshot.hasData) {
+                                                    return Text(
+                                                      snapshot.data?.bio ?? "",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyLarge!
+                                                          .copyWith(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 11),
+                                                    );
+                                                  }
+                                                  return const CircularProgressIndicator();
+                                                }),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  });
                             },
                           ),
                           const SizedBox(
@@ -207,9 +293,17 @@ class _JobCardState extends State<JobCard> {
                       ),
                       Text(
                         // ignore: unrelated_type_equality_checks
-                        Timestamp.now().toDate().difference(widget.time.toDate()).inDays == 0
+                        Timestamp.now()
+                                    .toDate()
+                                    .difference(widget.time.toDate())
+                                    .inDays ==
+                                0
                             ? "Today"
-                            : Timestamp.now().toDate().difference(widget.time.toDate()).inDays == 1
+                            : Timestamp.now()
+                                        .toDate()
+                                        .difference(widget.time.toDate())
+                                        .inDays ==
+                                    1
                                 ? "Yesterday"
                                 : "${Timestamp.now().toDate().difference(widget.time.toDate()).inDays} days ago",
                         style: Theme.of(context)

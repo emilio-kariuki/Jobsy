@@ -24,6 +24,7 @@ class Job {
     required this.userImage,
     required this.userName,
     required this.userRole,
+    this.appliedBy,
   });
 
   String name;
@@ -36,8 +37,10 @@ class Job {
   String userRole;
   String userImage;
   Timestamp createdAt;
+  String? appliedBy;
 
   factory Job.fromJson(Map<String, dynamic> json) => Job(
+        appliedBy: json["appliedBy"]!,
         userName: json["userName"],
         userRole: json["userRole"],
         userImage: json["userImage"],
@@ -51,6 +54,7 @@ class Job {
       );
 
   Map<String, dynamic> toJson() => {
+        "appliedBy": appliedBy!,
         "userName": userName,
         "userRole": userRole,
         "userImage": userImage,

@@ -8,13 +8,13 @@ abstract class FavouritesEvent extends Equatable {
 }
 
 class FavouriteAdded extends FavouritesEvent {
-  Job job;
+  JobModel job;
   BuildContext context;
   FavouriteAdded({required this.job, required this.context});
 }
 
 class FavouriteRemoved extends FavouritesEvent {
-  String id;
-  String collection;
-  FavouriteRemoved({required this.id, required this.collection});
+
+  int index;
+  FavouriteRemoved({ required this.index});
 }

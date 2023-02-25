@@ -55,6 +55,7 @@ class Jobs3Grid extends StatelessWidget {
                         docs[index].data() as Map<String, dynamic>;
                     return JobCard(
                       jobId: docs[index].id,
+                      belongsTo: data['belongsTo'] ?? "",
                       image: data['image'],
                       sender: "Emilio kariuki",
                       role: "Developer",

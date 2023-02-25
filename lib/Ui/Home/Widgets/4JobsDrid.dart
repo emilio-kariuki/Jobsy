@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_network/image_network.dart';
 import 'package:jobsy_flutter/Blocs/Favourite/favourites_bloc.dart';
+import 'package:jobsy_flutter/Firebase/Job.dart';
+import 'package:jobsy_flutter/Model/JobModel.dart';
 import 'package:jobsy_flutter/Ui/Home/HomePage.dart';
 import 'package:jobsy_flutter/Ui/Home/Widgets/JobsCard.dart';
 import 'package:jobsy_flutter/Ui/Utilities/ColorConstants.dart';
@@ -55,33 +57,35 @@ class JobsGrid extends StatelessWidget {
                         child: GridView.builder(
                           itemCount: docs.length,
                           shrinkWrap: true,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        mainAxisSpacing: 20,
-                        crossAxisSpacing: 10,
-                        crossAxisCount: Responsive.isDesktop(context)
-                            ? (state is ShowDetailsInitial ? 5 : 3)
-                            : state is ShowDetailsInitial
-                                ? 4
-                                : 2,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisSpacing: 20,
+                            crossAxisSpacing: 10,
+                            crossAxisCount: Responsive.isDesktop(context)
+                                ? (state is ShowDetailsInitial ? 5 : 2)
+                                : state is ShowDetailsInitial
+                                    ? 4
+                                    : 2,
                           ),
                           itemBuilder: (context, index) {
-                        Map<String, dynamic> data =
-                            docs[index].data() as Map<String, dynamic>;
-                                        
-                        return JobCard(
-                          jobId: docs[index].id,
-                          image: data['image'],
-                          sender: "Emilio kariuki",
-                          role: "Developer",
-                          title: data['name'] ?? "No title",
-                          description: data['description'] ?? "",
-                          amount: data['amount'] ?? "0",
-                          location: data['location'] ?? "No location",
-                          userImage: data['userImage'] ?? "",
-                          userName: data['userName'] ?? "",
-                          userRole: data['userRole'] ?? "",
-                          time: data['createdAt'] ?? "",
-                        );
+                            Map<String, dynamic> data =
+                                docs[index].data() as Map<String, dynamic>;
+
+                            return JobCard(
+                              jobId: docs[index].id,
+                              belongsTo: data['belongsTo'] ?? "",
+                              image: data['image'],
+                              sender: "Emilio kariuki",
+                              role: "Developer",
+                              title: data['name'] ?? "No title",
+                              description: data['description'] ?? "",
+                              amount: data['amount'] ?? "0",
+                              location: data['location'] ?? "No location",
+                              userImage: data['userImage'] ?? "",
+                              userName: data['userName'] ?? "",
+                              userRole: data['userRole'] ?? "",
+                              time: data['createdAt'] ?? "",
+                            );
                           },
                         ),
                       ),
@@ -161,9 +165,9 @@ class JobsGrid extends StatelessWidget {
                                           ImageNetwork(
                                             borderRadius:
                                                 BorderRadius.circular(100),
-                                            image: state.job.image,
-                                            height: 30,
-                                            width: 30,
+                                            image: state.job.userImage,
+                                            height: 50,
+                                            width: 50,
                                             duration: 10,
                                             onPointer: true,
                                             debugPrint: false,
@@ -186,21 +190,21 @@ class JobsGrid extends StatelessWidget {
                                                 MainAxisAlignment.start,
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
-                                            children: const [
+                                            children: [
                                               Text(
-                                                "Emilio kariuki",
-                                                style: TextStyle(
+                                                state.job.userName,
+                                                style: const TextStyle(
                                                     color: Colors.white,
-                                                    fontSize: 15),
+                                                    fontSize: 17),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 1,
                                               ),
                                               Text(
-                                                "Developer",
-                                                style: TextStyle(
+                                                state.job.userRole,
+                                                style: const TextStyle(
                                                     color: Colors.white54,
-                                                    fontSize: 12),
+                                                    fontSize: 13),
                                               ),
                                             ],
                                           )
@@ -208,7 +212,24 @@ class JobsGrid extends StatelessWidget {
                                       ),
                                       const Spacer(),
                                       Text(
-                                        "2 days ago",
+                                        // ignore: unrelated_type_equality_checks
+                                        Timestamp.now()
+                                                    .toDate()
+                                                    .difference(state
+                                                        .job.createdAt
+                                                        .toDate())
+                                                    .inDays ==
+                                                0
+                                            ? "Today"
+                                            : Timestamp.now()
+                                                        .toDate()
+                                                        .difference(state
+                                                            .job.createdAt
+                                                            .toDate())
+                                                        .inDays ==
+                                                    1
+                                                ? "Yesterday"
+                                                : "${Timestamp.now().toDate().difference(state.job.createdAt.toDate()).inDays} days ago",
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyLarge!
@@ -292,7 +313,64 @@ class JobsGrid extends StatelessWidget {
                                                 BorderRadius.circular(5),
                                           ),
                                         ),
-                                        onPressed: () async {},
+                                        onPressed: () async {
+                                          state.job.belongsTo !=
+                                                  FirebaseAuth
+                                                      .instance.currentUser!.uid
+                                              ? await FirebaseJob()
+                                                  .applyJobs(
+                                                  userId: FirebaseAuth.instance
+                                                      .currentUser!.uid,
+                                                  job: Job(
+                                                    name: state.job.name,
+                                                    description:
+                                                        state.job.description,
+                                                    amount: state.job.amount,
+                                                    location:
+                                                        state.job.location,
+                                                    image: state.job.image,
+                                                    createdAt:
+                                                        state.job.createdAt,
+                                                    userImage:
+                                                        state.job.userImage,
+                                                    userName:
+                                                        state.job.userName,
+                                                    userRole:
+                                                        state.job.userRole,
+                                                    belongsTo:
+                                                        state.job.belongsTo,
+                                                  ),
+                                                )
+                                                  .then((_) async {
+                                                  await FirebaseJob().applyJob(
+                                                    appliedBy: FirebaseAuth
+                                                        .instance
+                                                        .currentUser!
+                                                        .uid,
+                                                    userId: state.job.belongsTo,
+                                                    job: Job(
+                                                      name: state.job.name,
+                                                      description:
+                                                          state.job.description,
+                                                      amount: state.job.amount,
+                                                      location:
+                                                          state.job.location,
+                                                      image: state.job.image,
+                                                      createdAt:
+                                                          state.job.createdAt,
+                                                      userImage:
+                                                          state.job.userImage,
+                                                      userName:
+                                                          state.job.userName,
+                                                      userRole:
+                                                          state.job.userRole,
+                                                      belongsTo:
+                                                          state.job.belongsTo,
+                                                    ),
+                                                  );
+                                                })
+                                              : Container();
+                                        },
                                         child: Center(
                                           child: Text(
                                             "Apply",

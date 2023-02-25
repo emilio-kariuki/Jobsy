@@ -4,7 +4,9 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:jobsy_flutter/Firebase/Job.dart';
+import 'package:jobsy_flutter/Model/JobDetailsModel.dart';
 import 'package:jobsy_flutter/Model/JobModel.dart';
+import 'package:jobsy_flutter/Ui/Utilities/SharedPreferenceManager.dart';
 
 part 'favourites_event.dart';
 part 'favourites_state.dart';
@@ -16,7 +18,7 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
         emit(FavouriteLoading());
         try {
           await FirebaseJob()
-              .createFavourite(job: event.job, context: event.context)
+              .addFavourite(job: event.job, context: event.context,id: await SharedPreferencesManager().getUserId())
               .then((value) {
             emit(FavouriteAddedSuccess());
           });
@@ -29,7 +31,7 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
         emit(FavouriteLoading());
         try {
           await FirebaseJob()
-              .remove(id: event.id, collection: event.collection)
+              .deleteFavorite(userId: await SharedPreferencesManager().getUserId(), index: event.index)
               .then((value) {
             emit(FavouriteRemovedSuccess());
           });

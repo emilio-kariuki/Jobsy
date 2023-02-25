@@ -19,3 +19,10 @@ class UploadTryAgain extends ImageUploadEvent {
 
   const UploadTryAgain({required this.image});
 }
+
+class UpdateProfile extends ImageUploadEvent {
+  var image;
+  String path;
+
+  UpdateProfile({required this.image, required this.path});
+}

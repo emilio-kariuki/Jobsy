@@ -47,7 +47,8 @@ class _LoginPageState extends State<LoginPage>
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthBloc(
-          firebaseAuthentication: FirebaseAuthentication(), authenticationBloc: _authenticationBloc)
+          firebaseAuthentication: FirebaseAuthentication(),
+          authenticationBloc: _authenticationBloc)
         ..add(AuthStarted()),
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -302,104 +303,100 @@ class _LoginPageState extends State<LoginPage>
           });
         }
 
-        
-          return Container(
-              width: double.infinity,
-              constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height - 0.0,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  InputField(
-                    controller: nameController,
-                    title: "Name",
-                    hintText: "name",
-                    keyboardType: TextInputType.name,
-                  ),
-                  const SizedBox(height: 5),
-                  InputField(
-                    controller: emailController,
-                    title: "Email",
-                    hintText: "email",
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(height: 5),
-                  InputField(
-                    controller: passwordController,
-                    title: "Password",
-                    hintText: "password",
-                    keyboardType: TextInputType.visiblePassword,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  state is RegisterLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 3,
-                          ),
-                        )
-                      : clickButton(
-                          title: "Register",
-                          onPressed: () {
-                            if (emailController.text.isEmpty ||
-                                passwordController.text.isEmpty ||
-                                nameController.text.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  behavior: SnackBarBehavior.floating,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.2,
-                                  content:
-                                      const Text("Please fill all the fields"),
-                                  backgroundColor: Colors.red,
-                                ),
-                              );
-                            } else {
-                              BlocProvider.of<AuthBloc>(context).add(
-                                RegisterButtonPressed(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                  name: nameController.text,
-                                ),
-                              );
-                            }
-                          },
+        return Container(
+            width: double.infinity,
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height - 0.0,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                InputField(
+                  controller: nameController,
+                  title: "Name",
+                  hintText: "name",
+                  keyboardType: TextInputType.name,
+                ),
+                const SizedBox(height: 5),
+                InputField(
+                  controller: emailController,
+                  title: "Email",
+                  hintText: "email",
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const SizedBox(height: 5),
+                InputField(
+                  controller: passwordController,
+                  title: "Password",
+                  hintText: "password",
+                  keyboardType: TextInputType.visiblePassword,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                state is RegisterLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          strokeWidth: 3,
                         ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Center(
-                    child: Wrap(
-                      runAlignment: WrapAlignment.center,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Text(
-                          "Already have an account?",
+                      )
+                    : clickButton(
+                        title: "Register",
+                        onPressed: () {
+                          if (emailController.text.isEmpty ||
+                              passwordController.text.isEmpty ||
+                              nameController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                behavior: SnackBarBehavior.floating,
+                                width: MediaQuery.of(context).size.width * 0.2,
+                                content:
+                                    const Text("Please fill all the fields"),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          } else {
+                            BlocProvider.of<AuthBloc>(context).add(
+                              RegisterButtonPressed(
+                                email: emailController.text,
+                                password: passwordController.text,
+                                name: nameController.text,
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Center(
+                  child: Wrap(
+                    runAlignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      Text(
+                        "Already have an account?",
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              color: Colors.white,
+                            ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          _animationController!.reverse();
+                        },
+                        child: Text(
+                          "Login",
                           style:
                               Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                    color: Colors.white,
+                                    color: primaryColor,
                                   ),
                         ),
-                        TextButton(
-                          onPressed: () {
-                            _animationController!.reverse();
-                          },
-                          child: Text(
-                            "Login",
-                            style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                      color: primaryColor,
-                                    ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ));
-       
+                ),
+              ],
+            ));
       },
     );
   }
@@ -407,7 +404,6 @@ class _LoginPageState extends State<LoginPage>
   Widget _loginScreen(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthenticationBloc(
-       
           sharedPreferencesManager: SharedPreferencesManager()),
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
