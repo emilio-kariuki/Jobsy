@@ -79,7 +79,7 @@ class _SecondPageState extends State<SecondPage> {
         ),
       ],
       child: Scaffold(
-          backgroundColor: secondaryColor,
+          backgroundColor: bgColor,
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: SafeArea(

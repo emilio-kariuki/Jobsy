@@ -1,11 +1,11 @@
 {
-    "name": "jobsy_flutter",
-    "short_name": "jobsy_flutter",
+    "name": "jobsy",
+    "short_name": "jobsy",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Jobs all the way.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
