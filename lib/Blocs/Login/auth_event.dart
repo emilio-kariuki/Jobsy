@@ -44,3 +44,18 @@ class RegisterButtonPressed extends AuthEvent {
 }
 
 class AuthStarted extends AuthEvent {}
+
+class ResetPasswordButtonPressed extends AuthEvent {
+  final String email;
+
+  const ResetPasswordButtonPressed({
+    required this.email,
+  });
+
+  @override
+  List<Object> get props => [email];
+
+  @override
+  String toString() =>
+      'ResetPasswordButtonPressed { email: $email }';
+}

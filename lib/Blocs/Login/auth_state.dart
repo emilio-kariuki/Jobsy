@@ -37,3 +37,18 @@ class RegisterFailure extends AuthState {
   @override
   List<Object> get props => [message];
 }
+
+class ResetPasswordInitial extends AuthState {}
+
+class ResetPasswordLoading extends AuthState {}
+
+class ResetPasswordSuccess extends AuthState {}
+
+class ResetPasswordFailure extends AuthState {
+  final String message;
+
+  const ResetPasswordFailure({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}

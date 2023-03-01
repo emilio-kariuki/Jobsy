@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_network/image_network.dart';
 import 'package:jobsy_flutter/Blocs/Favourite/favourites_bloc.dart';
+import 'package:jobsy_flutter/Firebase/Job.dart';
 import 'package:jobsy_flutter/Ui/Utilities/ColorConstants.dart';
 import 'package:keep_keyboard_popup_menu/keep_keyboard_popup_menu.dart';
 
@@ -79,8 +80,7 @@ class ProfileJobCard extends StatelessWidget {
                             onSelected: (value) {
                               switch (value) {
                                 case menuValues.delete:
-                                  BlocProvider.of<FavouritesBloc>(context)
-                                      .add(FavouriteRemoved(index: index));
+                                  FirebaseJob().deleteJob(id: jobId,);
 
                                   break;
                                 case menuValues.edit:

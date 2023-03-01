@@ -13,6 +13,7 @@ import 'package:jobsy_flutter/Firebase/Authentication.dart';
 import 'package:jobsy_flutter/Firebase/Job.dart';
 import 'package:jobsy_flutter/Ui/Authentication/Widget/InputField.dart';
 import 'package:jobsy_flutter/Ui/Home/Widgets/ClaimedJobsCard.dart';
+import 'package:jobsy_flutter/Ui/Home/Widgets/FavouriteJobsCard.dart';
 import 'package:jobsy_flutter/Ui/Home/Widgets/JobsCard.dart';
 import 'package:jobsy_flutter/Ui/Home/Widgets/ProfilesJobCard.dart';
 import 'package:jobsy_flutter/Ui/Utilities/ColorConstants.dart';
@@ -490,8 +491,7 @@ class _SecondPageState extends State<SecondPage> {
                                                   padding:
                                                       const EdgeInsets.only(
                                                           right: 10),
-                                                  child: ProfileJobCard(
-                                                    collection: "favourite",
+                                                  child: FavouritesJobsCard(
                                                     index: index,
                                                     jobId: "",
                                                     image: docs[index].image,

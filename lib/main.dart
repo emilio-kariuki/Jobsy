@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:jobsy_flutter/Blocs/Authentication/authentication_bloc.dart';
+import 'package:jobsy_flutter/Blocs/Search%20Job/search_job_bloc.dart';
+import 'package:jobsy_flutter/Blocs/ShowDetails/show_details_bloc.dart';
 import 'package:jobsy_flutter/Ui/Authentication/SplashPage.dart';
 import 'package:jobsy_flutter/Ui/Home/HomePage.dart';
 import 'package:jobsy_flutter/Ui/Utilities/SharedPreferenceManager.dart';
@@ -16,7 +18,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
 
   runApp(const App());
 }
@@ -41,8 +42,18 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => authenticationBloc!,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => authenticationBloc!,
+        ),
+        BlocProvider(
+          create: (context) => SearchJobBloc(),
+        ),
+         BlocProvider(
+          create: (context) => ShowDetailsBloc(),
+        ),
+      ],
       child: MaterialApp(
         scrollBehavior: const MaterialScrollBehavior().copyWith(dragDevices: {
           PointerDeviceKind.mouse,

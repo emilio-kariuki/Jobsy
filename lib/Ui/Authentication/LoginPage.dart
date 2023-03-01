@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:jobsy_flutter/Blocs/Authentication/authentication_bloc.dart';
 import 'package:jobsy_flutter/Blocs/Login/auth_bloc.dart';
 import 'package:jobsy_flutter/Firebase/Authentication.dart';
+import 'package:jobsy_flutter/Repositories/Auth.dart';
 import 'package:jobsy_flutter/Ui/Authentication/Widget/InputField.dart';
 import 'package:jobsy_flutter/Ui/Home/HomePage.dart';
 import 'package:jobsy_flutter/Ui/Utilities/ColorConstants.dart';
@@ -30,6 +31,7 @@ class _LoginPageState extends State<LoginPage>
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final resetPasswordController = TextEditingController();
   late AuthenticationBloc _authenticationBloc;
 
   bool isChecked = false;
@@ -463,12 +465,105 @@ class _LoginPageState extends State<LoginPage>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        "Forgot Password?",
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              color: primaryColor,
-                            ),
-                      ),
+                      GestureDetector(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  backgroundColor: bgColor,
+                                  title: const Text(
+                                    "Reset Password",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  content: SizedBox(
+                                      height: 200,
+                                      width: 250,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          // ignore: prefer_const_constructors
+                                          Text(
+                                              "Enter a valid email to reset your password",
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w400)),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          InputField(
+                                            controller: resetPasswordController,
+                                            title: "Email",
+                                            hintText: "email",
+                                            keyboardType:
+                                                TextInputType.emailAddress,
+                                          ),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                          Center(
+                                            child: Wrap(
+                                              crossAxisAlignment:
+                                                  WrapCrossAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  height: 50,
+                                                  width: 200,
+                                                  child: ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          primaryColor,
+                                                      // padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(25),
+                                                      ),
+                                                    ),
+                                                    onPressed: () {
+                                                      Auth().resetPassword(
+                                                          email: resetPasswordController
+                                                              .text
+                                                      );
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: Text(
+                                                      "Send",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyLarge!
+                                                          .copyWith(
+                                                            color: Colors.white,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      )),
+                                );
+                              });
+                        },
+                        child: Text(
+                          "Forgot Password?",
+                          style:
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                    color: primaryColor,
+                                  ),
+                        ),
+                      )
                     ],
                   ),
                   const SizedBox(

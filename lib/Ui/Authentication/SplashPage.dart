@@ -30,7 +30,7 @@ class _SplashPageState extends State<SplashPage> {
                       Text(
                         appName,
                         style: GoogleFonts.roboto(
-                          fontSize: 40,
+                          fontSize: 45,
                           color: Colors.white54,
                           fontWeight: FontWeight.bold,
                         ),
@@ -39,7 +39,7 @@ class _SplashPageState extends State<SplashPage> {
                         height: 15,
                       ),
                       const Text(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sodales blandit tortor, eget hendrerit lacus imperdiet a.",
+                        "This is where Jobs unfold",
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.white54,

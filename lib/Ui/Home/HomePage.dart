@@ -10,7 +10,7 @@ import 'package:jobsy_flutter/Blocs/ShowPost/show_post_bloc.dart';
 import 'package:jobsy_flutter/Repositories/Auth.dart';
 import 'package:jobsy_flutter/Ui/Authentication/LoginPage.dart';
 import 'package:jobsy_flutter/Ui/Home/Pages/ProfilePage.dart';
-import 'package:jobsy_flutter/Ui/Home/Pages/ThirdPage.dart';
+import 'package:jobsy_flutter/Ui/Home/Pages/About.dart';
 import 'package:jobsy_flutter/Ui/Home/Pages/Home.dart';
 import 'package:jobsy_flutter/Ui/Home/Widgets/ProfileCard.dart';
 import 'package:jobsy_flutter/Ui/Utilities/ColorConstants.dart';
@@ -67,12 +67,12 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: secondaryColor,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(50.0), // he
+          preferredSize: const Size.fromHeight(55.0), // he
           child: AppBar(
             elevation: 0,
             backgroundColor: page.initialPage == 0 ?  bgColor:secondaryColor ,
             title: const Text(
-              "Jobsy",
+              "Jbms",
               style: TextStyle(color: Colors.white, fontSize: 28),
             ),
             leading: GestureDetector(
@@ -83,7 +83,11 @@ class _HomePageState extends State<HomePage> {
               },
               child: Image.asset("lib/Assets/jobsy.jpeg", height: 40,width: 40,)),
             actions: [
-              TextButton(onPressed: (){}, child: const Text(
+              TextButton(onPressed: (){
+                page.animateToPage(2,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut);
+              }, child: const Text(
               "About",
               style: TextStyle(color: Colors.white, fontSize: 18),
             )),
@@ -113,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                     sideMenuController: sideMenu,
                   ),
                   SecondPage(pageController: page,),
-                  const ThirdPage(),
+                  const AboutPage(),
                 ],
               ),
           

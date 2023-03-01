@@ -145,7 +145,9 @@ class FirebaseJob {
       data = value.data();
     });
 
-    return data["favourite"].map<JobModel>((e) => JobModel.fromJson(e)).toList();
+    return data["favourite"]
+        .map<JobModel>((e) => JobModel.fromJson(e))
+        .toList();
   }
 
   Future<List<JobModel>> getAppliedJobs({required String userId}) async {
@@ -154,10 +156,12 @@ class FirebaseJob {
       data = value.data();
     });
 
-    return data["appliedJobs"].map<JobModel>((e) => JobModel.fromJson(e)).toList();
+    return data["appliedJobs"]
+        .map<JobModel>((e) => JobModel.fromJson(e))
+        .toList();
   }
 
-   Future<List<Job>> getClaimedJobs({required String userId}) async {
+  Future<List<Job>> getClaimedJobs({required String userId}) async {
     var data;
     await _firestoreInstance.collection("user").doc(userId).get().then((value) {
       data = value.data();
@@ -166,7 +170,10 @@ class FirebaseJob {
     return data["claimedJobs"].map<Job>((e) => Job.fromJson(e)).toList();
   }
 
-  Future applyJob({required String userId, required String appliedBy, required Job job}) async {
+  Future applyJob(
+      {required String userId,
+      required String appliedBy,
+      required Job job}) async {
     await _firestoreInstance.collection("user").doc(userId).update({
       "claimedJobs": FieldValue.arrayUnion([
         {
@@ -186,7 +193,7 @@ class FirebaseJob {
     });
   }
 
-  Future applyJobs({required String userId,  required Job job}) async {
+  Future applyJobs({required String userId, required Job job}) async {
     await _firestoreInstance.collection("user").doc(userId).update({
       "appliedJobs": FieldValue.arrayUnion([
         {
@@ -200,16 +207,69 @@ class FirebaseJob {
           "userName": job.userName,
           "userRole": job.userRole,
           "userImage": job.userImage,
-          
         }
       ])
     });
   }
 
-  Future deleteFavorite(
-      {required String userId, required int index, }) async {
+  Future deleteFavorite({
+    required String userId,
+    required int index,
+  }) async {
     await _firestoreInstance.collection("user").doc(userId).update({
       "favourite": FieldValue.arrayRemove([index])
     });
+  }
+
+  Future deleteAppliedJob({
+    required String userId,
+    required int index,
+  }) async {
+    await _firestoreInstance.collection("user").doc(userId).update({
+      "appliedJobs": FieldValue.arrayRemove([index])
+    });
+  }
+
+  Future deleteClaimedJob({
+    required String userId,
+    required int index,
+  }) async {
+    await _firestoreInstance.collection("user").doc(userId).update({
+      "claimedJobs": FieldValue.arrayRemove([index])
+    });
+  }
+
+  Future<List<JobModel>> getJobsByUser({required String userId}) async {
+    var data;
+    await _firestoreInstance
+        .collection("job")
+        .where("belongsTo", isEqualTo: userId)
+        .get()
+        .then((value) {
+      data = value.docs;
+    });
+
+    return data.map<JobModel>((e) => JobModel.fromJson(e.data())).toList();
+  }
+
+  Future removeFavourite({
+    required String userId,
+    required int index,
+  }) async {
+    await _firestoreInstance.collection("user").doc(userId).update({
+      "favourite": FieldValue.arrayRemove([index])
+    });
+  }
+
+  Future<List<JobModel>> searchJob({required String job}) async {
+    var data;
+    await _firestoreInstance
+        .collection('job')
+        .where('name', isEqualTo: job)
+        .get()
+        .then((value) {
+      data = value.docs;
+    });
+    return jobModelFromJson(data);
   }
 }

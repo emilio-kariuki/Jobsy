@@ -29,4 +29,6 @@ class FirebaseAuthentication {
     });
     return UserModel.fromJson(data);
   }
+
+  
 }

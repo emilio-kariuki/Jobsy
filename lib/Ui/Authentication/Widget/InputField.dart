@@ -14,7 +14,8 @@ class InputField extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final bool different;
-
+  final Function()? onTap;
+  final Function(String)? onFieldSubmitted;
   const InputField({
     super.key,
     required this.controller,
@@ -28,6 +29,8 @@ class InputField extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.different = false,
+    this.onTap,
+    this.onFieldSubmitted,
   });
 
   @override
@@ -51,6 +54,8 @@ class InputField extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
           ),
           child: TextFormField(
+            onTap: onTap,
+            onFieldSubmitted: onFieldSubmitted,
             controller: controller,
             obscureText: obscureText ?? false,
             keyboardType: keyboardType,
@@ -96,3 +101,7 @@ class InputField extends StatelessWidget {
     );
   }
 }
+
+
+
+

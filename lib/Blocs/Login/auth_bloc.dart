@@ -55,6 +55,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(RegisterFailure(message: e.toString()));
         }
       }
+
+      if (event is ResetPasswordButtonPressed) {
+        emit(ResetPasswordLoading());
+        try {
+          final bool isReset = await Auth().resetPassword(
+            email: event.email,
+          );
+          if (isReset) {
+            emit(ResetPasswordSuccess());
+          } else {
+            emit(const ResetPasswordFailure(message: 'Reset Failed'));
+          }
+        } catch (e) {
+          emit(ResetPasswordFailure(message: e.toString()));
+        }
+      }
     });
   }
 }

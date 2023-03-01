@@ -320,7 +320,7 @@ class _JobCardState extends State<JobCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        widget.title,
+                        widget.title, 
                         overflow: TextOverflow.clip,
                         style:
                             const TextStyle(color: Colors.white, fontSize: 18),
