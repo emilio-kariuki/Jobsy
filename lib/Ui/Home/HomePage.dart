@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
             elevation: 0,
             backgroundColor: page.initialPage == 0 ?  bgColor:secondaryColor ,
             title: const Text(
-              "Jbms",
+              "Job Management System",
               style: TextStyle(color: Colors.white, fontSize: 28),
             ),
             leading: GestureDetector(

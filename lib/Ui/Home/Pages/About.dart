@@ -40,7 +40,7 @@ class _AboutPageState extends State<AboutPage> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: bgColor,
         body: SingleChildScrollView(
           child: Column(
             children: [

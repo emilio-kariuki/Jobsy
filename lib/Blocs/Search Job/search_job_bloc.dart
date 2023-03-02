@@ -23,7 +23,10 @@ class SearchJobBloc extends Bloc<SearchJobEvent, SearchJobState> {
           await FirebaseFirestore.instance
               .collection('job')
               .where('name', isGreaterThanOrEqualTo: event.name)
+               .where('name', isLessThan: '${event.name}z')
+              .orderBy('name', descending: false)
               .get()
+              
               .then((value) {
             emit(SearchJobSuccess(
                 jobs: value.docs

@@ -257,7 +257,16 @@ class FirebaseJob {
     required int index,
   }) async {
     await _firestoreInstance.collection("user").doc(userId).update({
-      "favourite": FieldValue.arrayRemove([index])
+      "favourite": FieldValue.delete(),
+    }, );
+  }
+
+  Future removeFavorite({
+    required String userId,
+    required int index,
+  }) async {
+    await _firestoreInstance.collection("user").doc(userId).update({
+      "favourite": FieldValue.delete(),
     });
   }
 

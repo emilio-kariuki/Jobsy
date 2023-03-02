@@ -345,7 +345,7 @@ class _HomeState extends State<Home> {
               backgroundColor: bgColor,
               body: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -390,8 +390,20 @@ class _HomeState extends State<Home> {
                                 onFieldSubmitted: (value) {
                                   BlocProvider.of<SearchJobBloc>(context).add(
                                       SearchJobSubmitted(
-                                          name: searchController.text.toUpperCase()));
+                                          name: searchController.text
+                                              ));
+                                              searchController.clear();
                                 },
+                                suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      BlocProvider.of<SearchJobBloc>(context)
+                                          .add(HomeBar());
+                                    },
+                                    child: const Icon(
+                                      Icons.close,
+                                      color: Colors.white,
+                                      size: 20,
+                                    )),
                                 controller: searchController,
                                 hintText: "search job",
                                 prefixIcon: const Icon(
@@ -401,17 +413,9 @@ class _HomeState extends State<Home> {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 10,),
-                            GestureDetector(
-                              onTap: () {
-                                BlocProvider.of<SearchJobBloc>(context).add(
-                                      HomeBar());
-                              },
-                              child: Text("cancel",
-                                  style: GoogleFonts.roboto(
-                                    fontSize: 15,
-                                    color: Colors.white,
-                                  )),)
+                            const SizedBox(
+                              width: 10,
+                            ),
                           ],
                         ),
                         BlocBuilder<ShowPostBloc, ShowPostState>(
@@ -480,9 +484,7 @@ class _HomeState extends State<Home> {
                     const SizedBox(
                       height: 10,
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    
                     BlocBuilder<SearchJobBloc, SearchJobState>(
                       builder: (context, state) {
                         return state is SearchJobInitial
