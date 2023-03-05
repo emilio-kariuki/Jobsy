@@ -392,7 +392,7 @@ class _HomeState extends State<Home> {
                                       SearchJobSubmitted(
                                           name: searchController.text
                                               ));
-                                              searchController.clear();
+                                              // searchController.clear();
                                 },
                                 suffixIcon: GestureDetector(
                                     onTap: () {
