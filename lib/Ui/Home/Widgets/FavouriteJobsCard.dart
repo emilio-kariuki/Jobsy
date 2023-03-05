@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_network/image_network.dart';
@@ -60,7 +61,6 @@ class FavouritesJobsCard extends StatelessWidget {
                   onPointer: true,
                   debugPrint: false,
                   fullScreen: false,
-                  curve: Curves.bounceIn,
                   onLoading: const CircularProgressIndicator(
                     color: Colors.indigoAccent,
                   ),
@@ -68,9 +68,7 @@ class FavouritesJobsCard extends StatelessWidget {
                     Icons.error,
                     color: Colors.red,
                   ),
-                  onTap: () {
-                    debugPrint("©gabriel_patrick_souza");
-                  },
+                  imageCache: CachedNetworkImageProvider(image),
                 ),
                 Positioned.fill(
                     top: 10,
@@ -86,16 +84,17 @@ class FavouritesJobsCard extends StatelessWidget {
                           }
 
                           if (state is FavouriteRemovedSuccess) {
-                            _onWidgetDidBuild((){
+                            _onWidgetDidBuild(() {
                               ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                behavior: SnackBarBehavior.floating,
-                                width: MediaQuery.of(context).size.width * 0.2,
-                                content: const Text("Removed from favourites",
-                                    style: TextStyle(color: Colors.white)),
-                                backgroundColor: Colors.green,
-                              ),
-                            );
+                                SnackBar(
+                                  behavior: SnackBarBehavior.floating,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.2,
+                                  content: const Text("Removed from favourites",
+                                      style: TextStyle(color: Colors.white)),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
                             });
                           }
 

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +99,35 @@ class _JobCardState extends State<JobCard> {
                                 RemoveDetailsPressed(),
                               );
                       },
+                      imageCache: CachedNetworkImageProvider(widget.image),
                     );
+
+                    // return CachedNetworkImage(
+                    //   height: 130,
+                    //   width: MediaQuery.of(context).size.width / 4,
+                    //   imageUrl: widget.image,
+                    //   fit: BoxFit.cover,
+                    //   imageBuilder: (context, imageProvider) {
+                    //     return Container(
+                    //       decoration: BoxDecoration(
+                    //         image: DecorationImage(
+                    //           image: imageProvider,
+                    //           fit: BoxFit.cover,
+                    //         ),
+                    //       ),
+                    //     );
+                    //   },
+                    //   placeholder: (context, url) => const Center(
+                    //     child: CircularProgressIndicator(
+                    //       strokeWidth: 3,
+                    //     ),
+                    //   ),
+                    //   errorWidget: (context, url, error) => const Icon(
+                    //     Icons.error,
+                    //     color: Colors.red,
+                    //     size: 18,
+                    //   ),
+                    // );
                   },
                 ),
                 const SizedBox(
@@ -115,24 +144,8 @@ class _JobCardState extends State<JobCard> {
                         children: [
                           Row(
                             children: [
-                              ImageNetwork(
-                                image: widget.userImage,
-                                height: 30,
-                                width: 30,
-                                borderRadius: BorderRadius.circular(100),
-                                duration: 10,
-                                onPointer: true,
-                                debugPrint: false,
-                                fullScreen: false,
-                                curve: Curves.bounceIn,
-                                onLoading: const CircularProgressIndicator(
-                                  color: Colors.indigoAccent,
-                                ),
-                                onError: const Icon(
-                                  Icons.error,
-                                  color: Colors.red,
-                                ),
-                                onTap: () {
+                              GestureDetector(
+                                onTap: () async {
                                   return showDialog<void>(
                                       context: context,
                                       barrierDismissible: true,
@@ -155,14 +168,10 @@ class _JobCardState extends State<JobCard> {
                                                   image: widget.userImage,
                                                   height: 40,
                                                   width: 40,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          100),
                                                   duration: 10,
                                                   onPointer: true,
                                                   debugPrint: false,
                                                   fullScreen: false,
-                                                  curve: Curves.bounceIn,
                                                   onLoading:
                                                       const CircularProgressIndicator(
                                                     color: Colors.indigoAccent,
@@ -171,10 +180,6 @@ class _JobCardState extends State<JobCard> {
                                                     Icons.error,
                                                     color: Colors.red,
                                                   ),
-                                                  onTap: () {
-                                                    debugPrint(
-                                                        "©gabriel_patrick_souza");
-                                                  },
                                                 ),
                                                 const SizedBox(
                                                   height: 10,
@@ -224,6 +229,23 @@ class _JobCardState extends State<JobCard> {
                                         );
                                       });
                                 },
+                                child: ImageNetwork(
+                                  image: widget.userImage,
+                                  height: 30,
+                                  width: 30,
+                                  duration: 10,
+                                  onPointer: true,
+                                  debugPrint: false,
+                                  fullScreen: false,
+                                  borderRadius: BorderRadius.circular(100),
+                                  onLoading: const CircularProgressIndicator(
+                                    color: Colors.indigoAccent,
+                                  ),
+                                  onError: const Icon(
+                                    Icons.error,
+                                    color: Colors.red,
+                                  ),
+                                ),
                               ),
                               const SizedBox(
                                 width: 10,
@@ -332,52 +354,50 @@ class _JobCardState extends State<JobCard> {
             BlocBuilder<FavouritesBloc, FavouritesState>(
               builder: (context, state) {
                 return Positioned.fill(
-                   
                     child: Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () async {
-                            BlocProvider.of<FavouritesBloc>(context)
-                                .add(FavouriteAdded(
-                                    job: JobModel(
-                                      name: widget.title,
-                                      description: widget.description,
-                                      image: widget.image,
-                                      location: widget.location,
-                                      createdAt: Timestamp.now(),
-                                      amount: widget.amount,
-                                      belongsTo: FirebaseAuth
-                                          .instance.currentUser!.uid,
-                                      userImage:
-                                          await SharedPreferencesManager()
-                                              .getUserImage(),
-                                      userName: await SharedPreferencesManager()
-                                          .getUserName(),
-                                      userRole: await SharedPreferencesManager()
-                                          .getRole(),
-                                    ),
-                                    context: context));
-                          },
-                          child: Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: primaryColor,
-                                shape: BoxShape.rectangle,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Icon(
-                                Icons.favorite,
-                                color: state is FavouritesInitial ||
-                                        state is FavouriteRemovedSuccess
-                                    ? Colors.white
-                                    : Colors.red,
-                                size: 20,
-                              )),
-                        ),
-                      ),
-                    ));
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () async {
+                        BlocProvider.of<FavouritesBloc>(context)
+                            .add(FavouriteAdded(
+                                job: JobModel(
+                                  name: widget.title,
+                                  description: widget.description,
+                                  image: widget.image,
+                                  location: widget.location,
+                                  createdAt: Timestamp.now(),
+                                  amount: widget.amount,
+                                  belongsTo:
+                                      FirebaseAuth.instance.currentUser!.uid,
+                                  userImage: await SharedPreferencesManager()
+                                      .getUserImage(),
+                                  userName: await SharedPreferencesManager()
+                                      .getUserName(),
+                                  userRole: await SharedPreferencesManager()
+                                      .getRole(),
+                                ),
+                                context: context));
+                      },
+                      child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: primaryColor,
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Icon(
+                            Icons.favorite,
+                            color: state is FavouritesInitial ||
+                                    state is FavouriteRemovedSuccess
+                                ? Colors.white
+                                : Colors.red,
+                            size: 20,
+                          )),
+                    ),
+                  ),
+                ));
               },
             ),
           ],

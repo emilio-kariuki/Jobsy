@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,7 @@ class ClaimedJobsCard extends StatelessWidget {
           children: [
             Stack(
               children: [
-                ImageNetwork(
+                 ImageNetwork(
                   image: image,
                   height: 130,
                   width: MediaQuery.of(context).size.width / 4,
@@ -62,7 +63,6 @@ class ClaimedJobsCard extends StatelessWidget {
                   onPointer: true,
                   debugPrint: false,
                   fullScreen: false,
-                  curve: Curves.bounceIn,
                   onLoading: const CircularProgressIndicator(
                     color: Colors.indigoAccent,
                   ),
@@ -70,10 +70,7 @@ class ClaimedJobsCard extends StatelessWidget {
                     Icons.error,
                     color: Colors.red,
                   ),
-                  onTap: () {
-                    debugPrint("©gabriel_patrick_souza");
-                  },
-                ),
+                 ),
                 Positioned.fill(
                     top: 10,
                     right: 10,
