@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:jobsy_flutter/Blocs/Authentication/authentication_bloc.dart';
 import 'package:jobsy_flutter/Blocs/Login/auth_bloc.dart';
 import 'package:jobsy_flutter/Firebase/Authentication.dart';
@@ -33,6 +34,9 @@ class _LoginPageState extends State<LoginPage>
   final passwordController = TextEditingController();
   final resetPasswordController = TextEditingController();
   late AuthenticationBloc _authenticationBloc;
+
+  bool obscureText1 = true;
+  bool obscureText2 = true;
 
   bool isChecked = false;
   @override
@@ -327,11 +331,79 @@ class _LoginPageState extends State<LoginPage>
                   keyboardType: TextInputType.emailAddress,
                 ),
                 const SizedBox(height: 5),
-                InputField(
-                  controller: passwordController,
-                  title: "Password",
-                  hintText: "password",
-                  keyboardType: TextInputType.visiblePassword,
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Password",
+                        style: GoogleFonts.poppins(
+                          fontSize: 15,
+                          color: Colors.white,
+                        ),
+                      ),
+                    const SizedBox(height: 5),
+                    Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: secondaryColor,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: TextFormField(
+                        onTap: () {},
+                        onFieldSubmitted: (value) {},
+                        controller: passwordController,
+                        obscureText: obscureText2,
+                        keyboardType: TextInputType.visiblePassword,
+                        cursorColor: Colors.white,
+                        enabled: true,
+                        maxLines: 1,
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              color: Colors.white,
+                            ),
+                        decoration: InputDecoration(
+                          suffixIcon: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  obscureText2 = !obscureText2;
+                                });
+                              },
+                              child: const Icon(
+                                Icons.visibility,
+                                size: 20,
+                                color: Colors.white54,
+                              )),
+                          hintText: "password",
+                          hintStyle:
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                    color: Colors.white54,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromRGBO(74, 77, 84, 0.2),
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            //gapPadding: 16,
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 15,
@@ -455,11 +527,80 @@ class _LoginPageState extends State<LoginPage>
                     keyboardType: TextInputType.emailAddress,
                   ),
                   const SizedBox(height: 5),
-                  InputField(
-                    controller: passwordController,
-                    title: "Password",
-                    hintText: "password",
-                    keyboardType: TextInputType.visiblePassword,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Password",
+                        style: GoogleFonts.poppins(
+                          fontSize: 15,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: secondaryColor,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: TextFormField(
+                          onTap: () {},
+                          onFieldSubmitted: (value) {},
+                          controller: passwordController,
+                          obscureText: obscureText1,
+                          keyboardType: TextInputType.visiblePassword,
+                          cursorColor: Colors.white,
+                          enabled: true,
+                          maxLines: 1,
+                          style:
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                    color: Colors.white,
+                                  ),
+                          decoration: InputDecoration(
+                            suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    obscureText1 = !obscureText1;
+                                  });
+                                },
+                                child: const Icon(
+                                  Icons.visibility,
+                                  size: 20,
+                                  color: Colors.white54,
+                                )),
+                            hintText: "password",
+                            hintStyle:
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      color: Colors.white54,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color.fromRGBO(74, 77, 84, 0.2),
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              //gapPadding: 16,
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).colorScheme.error,
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).colorScheme.error,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 10),
                   Row(
@@ -531,9 +672,9 @@ class _LoginPageState extends State<LoginPage>
                                                     ),
                                                     onPressed: () {
                                                       Auth().resetPassword(
-                                                          email: resetPasswordController
-                                                              .text
-                                                      );
+                                                          email:
+                                                              resetPasswordController
+                                                                  .text);
                                                       Navigator.of(context)
                                                           .pop();
                                                     },
