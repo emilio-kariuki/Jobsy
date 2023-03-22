@@ -45,8 +45,8 @@ class ClaimedJobsCard extends StatelessWidget {
       create: (context) => FavouritesBloc(),
       child: Container(
         // padding: const EdgeInsets.only(),
+        height: MediaQuery.of(context).size.height * 0.1,
         width: MediaQuery.of(context).size.width / 5,
-        height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           color: secondaryColor,
           borderRadius: BorderRadius.circular(5),
@@ -55,7 +55,7 @@ class ClaimedJobsCard extends StatelessWidget {
           children: [
             Stack(
               children: [
-                 ImageNetwork(
+                ImageNetwork(
                   image: image,
                   height: 130,
                   width: MediaQuery.of(context).size.width / 4,
@@ -70,7 +70,7 @@ class ClaimedJobsCard extends StatelessWidget {
                     Icons.error,
                     color: Colors.red,
                   ),
-                 ),
+                ),
                 Positioned.fill(
                     top: 10,
                     right: 10,
@@ -164,10 +164,9 @@ class ClaimedJobsCard extends StatelessWidget {
                         style:
                             const TextStyle(color: Colors.white, fontSize: 18),
                       ),
-                      Text(
+                      const Text(
                         "\$",
-                        style: const TextStyle(
-                            color: Colors.white54, fontSize: 12),
+                        style: TextStyle(color: Colors.white54, fontSize: 12),
                       )
                     ],
                   ),
@@ -183,8 +182,25 @@ class ClaimedJobsCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 30,
                   ),
+                  Container(
+                    height: 50,
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: const Center(
+                      child:  Text("Assign",
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: Colors.white,
+                            fontWeight: FontWeight.normal,
+                          )),
+                    ),
+                  ),
+
                   // Row(
                   //   children: [
                   //     const Icon(
