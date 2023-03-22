@@ -599,6 +599,7 @@ class _SecondPageState extends State<SecondPage> {
                                         return out;
                                       },
                                     )),
+                                    const SizedBox(height: 10,),
                                 const Text(
                                   "Claimed jobs",
                                   style: TextStyle(
