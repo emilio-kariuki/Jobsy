@@ -11,7 +11,6 @@ import 'package:jobsy_flutter/Ui/Authentication/SplashPage.dart';
 import 'package:jobsy_flutter/Ui/Home/HomePage.dart';
 import 'package:jobsy_flutter/Ui/Utilities/SharedPreferenceManager.dart';
 import 'package:jobsy_flutter/firebase_options.dart';
-import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

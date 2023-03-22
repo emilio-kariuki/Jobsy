@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_network/image_network.dart';
@@ -48,7 +49,7 @@ class ProfileJobCard extends StatelessWidget {
           children: [
             Stack(
               children: [
-                ImageNetwork(
+                 ImageNetwork(
                   image: image,
                   height: 130,
                   width: MediaQuery.of(context).size.width / 4,
@@ -56,7 +57,6 @@ class ProfileJobCard extends StatelessWidget {
                   onPointer: true,
                   debugPrint: false,
                   fullScreen: false,
-                  curve: Curves.bounceIn,
                   onLoading: const CircularProgressIndicator(
                     color: Colors.indigoAccent,
                   ),
@@ -64,10 +64,7 @@ class ProfileJobCard extends StatelessWidget {
                     Icons.error,
                     color: Colors.red,
                   ),
-                  onTap: () {
-                    debugPrint("©gabriel_patrick_souza");
-                  },
-                ),
+                 ),
                 Positioned.fill(
                     top: 10,
                     right: 10,
@@ -80,7 +77,9 @@ class ProfileJobCard extends StatelessWidget {
                             onSelected: (value) {
                               switch (value) {
                                 case menuValues.delete:
-                                  FirebaseJob().deleteJob(id: jobId,);
+                                  FirebaseJob().deleteJob(
+                                    id: jobId,
+                                  );
 
                                   break;
                                 case menuValues.edit:

@@ -5,11 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_network/image_network.dart';
 import 'package:jobsy_flutter/Blocs/ShowDetails/show_details_bloc.dart';
-import 'package:jobsy_flutter/Blocs/ShowPost/show_post_bloc.dart';
 import 'package:jobsy_flutter/Firebase/Authentication.dart';
-import 'package:jobsy_flutter/Firebase/Job.dart';
 import 'package:jobsy_flutter/Model/JobDetailsModel.dart';
-import 'package:jobsy_flutter/Model/JobModel.dart';
 import 'package:jobsy_flutter/Model/UserModel.dart';
 import 'package:jobsy_flutter/Ui/Utilities/ColorConstants.dart';
 import 'package:jobsy_flutter/Ui/Utilities/SharedPreferenceManager.dart';
@@ -318,7 +315,7 @@ class _JobCardState extends State<JobCard> {
                       SizedBox(
                         height: 55,
                         child: Text(
-                          """${widget.description}""",
+                          widget.description,
                           overflow: TextOverflow.clip,
                           style: const TextStyle(
                               color: Colors.white, fontSize: 12),

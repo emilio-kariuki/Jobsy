@@ -1,14 +1,11 @@
-import 'dart:js_util';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_network/image_network.dart';
-import 'package:jobsy_flutter/Blocs/Favourite/favourites_bloc.dart';
 import 'package:jobsy_flutter/Firebase/Job.dart';
 import 'package:jobsy_flutter/Model/JobModel.dart';
-import 'package:jobsy_flutter/Ui/Home/HomePage.dart';
 import 'package:jobsy_flutter/Ui/Home/Widgets/JobsCard.dart';
 import 'package:jobsy_flutter/Ui/Utilities/ColorConstants.dart';
 import 'package:jobsy_flutter/Ui/Utilities/Responsive.dart';
