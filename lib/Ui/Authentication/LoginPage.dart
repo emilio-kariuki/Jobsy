@@ -332,7 +332,7 @@ class _LoginPageState extends State<LoginPage>
                 ),
                 const SizedBox(height: 5),
                 Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start, 
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -368,8 +368,8 @@ class _LoginPageState extends State<LoginPage>
                                   obscureText2 = !obscureText2;
                                 });
                               },
-                              child: const Icon(
-                                Icons.visibility,
+                              child:  Icon(
+                                obscureText2 ? Icons.visibility : Icons.visibility_off,
                                 size: 20,
                                 color: Colors.white54,
                               )),
@@ -565,8 +565,8 @@ class _LoginPageState extends State<LoginPage>
                                     obscureText1 = !obscureText1;
                                   });
                                 },
-                                child: const Icon(
-                                  Icons.visibility,
+                                child:  Icon(
+                                  obscureText1 ? Icons.visibility: Icons.visibility_off,
                                   size: 20,
                                   color: Colors.white54,
                                 )),
