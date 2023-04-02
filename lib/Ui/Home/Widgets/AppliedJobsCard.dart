@@ -9,7 +9,7 @@ import 'package:jobsy_flutter/Ui/Utilities/ColorConstants.dart';
 
 enum menuValues { edit, delete }
 
-class FavouriteJobCard extends StatelessWidget {
+class AppliedJobsCard extends StatelessWidget {
   final String image;
   final String sender;
   final String role;
@@ -23,8 +23,10 @@ class FavouriteJobCard extends StatelessWidget {
   final String userRole;
   final String userName;
   final String belongsTo;
+  final String? id;
+  final String appliedBy;
   int index;
-  FavouriteJobCard(
+  AppliedJobsCard(
       {super.key,
       required this.image,
       required this.sender,
@@ -39,7 +41,8 @@ class FavouriteJobCard extends StatelessWidget {
       required this.userImage,
       required this.userRole,
       required this.userName,
-      required this.belongsTo});
+      required this.belongsTo,
+      this.id, required this.appliedBy});
 
   @override
   Widget build(BuildContext context) {
@@ -83,9 +86,6 @@ class FavouriteJobCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
                   Row(
                     children: [
                       Expanded(
@@ -222,7 +222,8 @@ class FavouriteJobCard extends StatelessWidget {
                         onSelected: (value) {
                           switch (value) {
                             case menuValues.delete:
-                              FirebaseJob().deleteFavouriteJob(index: index);
+                              FirebaseJob().deleteAppliedJob(
+                                  index: index, otherId: appliedBy);
 
                               break;
                             case menuValues.edit:
@@ -236,13 +237,6 @@ class FavouriteJobCard extends StatelessWidget {
                           size: 20,
                         ),
                         itemBuilder: (context) => [
-                          const PopupMenuItem(
-                            value: menuValues.edit,
-                            child: Text(
-                              "Edit",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
                           const PopupMenuItem(
                             value: menuValues.delete,
                             child: Text(
@@ -266,9 +260,10 @@ class FavouriteJobCard extends StatelessWidget {
                         style:
                             const TextStyle(color: Colors.white, fontSize: 18),
                       ),
-                       Text(
+                      Text(
                         "\$$amount",
-                        style: const TextStyle(color: Colors.white54, fontSize: 12),
+                        style: const TextStyle(
+                            color: Colors.white54, fontSize: 12),
                       )
                     ],
                   ),

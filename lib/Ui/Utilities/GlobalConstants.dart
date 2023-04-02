@@ -1,5 +1,5 @@
 const String IS_LOGGED_IN = "first time";
-const String appName = "Jbms";
+const String appName = "Jobs Management System";
 const String IS_LOGGED_OUT = "ongoing";
 const String USER_ID = "user id";
 const String USER_NAME = "user name";

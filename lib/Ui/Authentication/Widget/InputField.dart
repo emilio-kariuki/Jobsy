@@ -54,6 +54,7 @@ class InputField extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
           ),
           child: TextFormField(
+            
             onTap: onTap,
             onFieldSubmitted: onFieldSubmitted,
             controller: controller,

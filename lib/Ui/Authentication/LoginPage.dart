@@ -526,7 +526,7 @@ class _LoginPageState extends State<LoginPage>
                     hintText: "email",
                     keyboardType: TextInputType.emailAddress,
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 8),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,

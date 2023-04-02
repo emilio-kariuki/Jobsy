@@ -1,4 +1,7 @@
+// ignore_for_file: avoid_print, invalid_return_type_for_catch_error
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jobsy_flutter/Model/JobDetailsModel.dart';
 
@@ -212,24 +215,6 @@ class FirebaseJob {
     });
   }
 
-  Future deleteFavorite({
-    required String userId,
-    required int index,
-  }) async {
-    await _firestoreInstance.collection("user").doc(userId).update({
-      "favourite": FieldValue.arrayRemove([index])
-    });
-  }
-
-  Future deleteAppliedJob({
-    required String userId,
-    required int index,
-  }) async {
-    await _firestoreInstance.collection("user").doc(userId).update({
-      "appliedJobs": FieldValue.arrayRemove([index])
-    });
-  }
-
   Future deleteClaimedJob({
     required String userId,
     required int index,
@@ -256,9 +241,11 @@ class FirebaseJob {
     required String userId,
     required int index,
   }) async {
-    await _firestoreInstance.collection("user").doc(userId).update({
-      "favourite": FieldValue.delete(),
-    }, );
+    await _firestoreInstance.collection("user").doc(userId).update(
+      {
+        "favourite": FieldValue.delete(),
+      },
+    );
   }
 
   Future removeFavorite({
@@ -280,5 +267,89 @@ class FirebaseJob {
       data = value.docs;
     });
     return jobModelFromJson(data);
+  }
+
+  Future deleteFavouriteJob({required int index}) async {
+    final docRef = FirebaseFirestore.instance
+        .collection('user')
+        .doc(FirebaseAuth.instance.currentUser!.uid);
+
+    await docRef.get().then((snapshot) async {
+      if (snapshot.exists) {
+        final fieldValueList = List.from(snapshot.data()!['favourite']);
+        fieldValueList.removeAt(index);
+        docRef
+            .update({
+              'favourite': fieldValueList,
+            })
+            .then((value) => print('Item removed successfully'))
+            .catchError((error) => print('Failed to remove item: $error'));
+      } else {
+        print('Document does not exist');
+      }
+    }).catchError((error) => print('Failed to get document: $error'));
+  }
+
+  Future deleteAppliedJob({required int index, required String otherId}) async {
+    final docRef = FirebaseFirestore.instance
+        .collection('user')
+        .doc(FirebaseAuth.instance.currentUser!.uid);
+    final otherRef = FirebaseFirestore.instance.collection('user').doc(otherId);
+
+    await docRef.get().then((snapshot) async {
+      if (snapshot.exists) {
+        final fieldValueList = List.from(snapshot.data()!['appliedJobs']);
+        fieldValueList.removeAt(index);
+        docRef
+            .update({
+              'appliedJobs': fieldValueList,
+            })
+            .then((value) => print('Item removed successfully'))
+            .catchError((error) => print('Failed to remove item: $error'));
+      } else {
+        print('Document does not exist');
+      }
+    }).catchError((error) => print('Failed to get document: $error'));
+
+    await otherRef.get().then((snapshot) async {
+      if (snapshot.exists) {
+        final fieldValueList = List.from(snapshot.data()!['claimedJobs']);
+        fieldValueList.removeAt(index);
+        otherRef
+            .update({
+              'claimedJobs': fieldValueList,
+            })
+            .then((value) => print('Item removed successfully'))
+            .catchError((error) => print('Failed to remove item: $error'));
+      } else {
+        print('Document does not exist');
+      }
+    }).catchError((error) => print('Failed to get document: $error'));
+  }
+
+  Future editJob(
+      {required String id,
+      required String name,
+      required String amount,
+      required String description,
+      required String image,
+      required String location,
+      required Timestamp createdAt,
+      required String belongsTo,
+      required String userName,
+      required String userRole,
+      required String userImage}) async {
+    await _firestoreInstance.collection("job").doc(id).update({
+      "name": name,
+      "description": description,
+      "image": image,
+      "location": location,
+      "createdAt": createdAt,
+      "amount": amount,
+      "belongsTo": belongsTo,
+      "userName": userName,
+      "userRole": userRole,
+      "userImage": userImage,
+    });
   }
 }

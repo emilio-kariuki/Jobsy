@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:jobsy_flutter/Model/JobModel.dart';
 import 'package:jobsy_flutter/Model/UserModel.dart';
 
 class FirebaseAuthentication {

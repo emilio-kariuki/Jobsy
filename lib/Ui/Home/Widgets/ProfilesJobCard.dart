@@ -1,11 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_network/image_network.dart';
 import 'package:jobsy_flutter/Blocs/Favourite/favourites_bloc.dart';
 import 'package:jobsy_flutter/Firebase/Job.dart';
 import 'package:jobsy_flutter/Ui/Utilities/ColorConstants.dart';
-import 'package:keep_keyboard_popup_menu/keep_keyboard_popup_menu.dart';
 
 enum menuValues { edit, delete }
 
@@ -178,7 +176,7 @@ class ProfileJobCard extends StatelessWidget {
                             const TextStyle(color: Colors.white, fontSize: 18),
                       ),
                       Text(
-                        "\$",
+                        "\$$amount",
                         style: const TextStyle(
                             color: Colors.white54, fontSize: 12),
                       )

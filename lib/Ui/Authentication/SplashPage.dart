@@ -25,44 +25,44 @@ class _SplashPageState extends State<SplashPage> {
                   padding: const EdgeInsets.only(left: 20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         appName,
                         style: GoogleFonts.roboto(
-                          fontSize: 45,
-                          color: Colors.white54,
+                          fontSize: 50,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 7,
                       ),
                       const Text(
                         "This is where Jobs unfold",
                         style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white54,
+                          fontSize: 17,
+                          color: Colors.white,
                           // fontWeight: FontWeight.w400,
                         ),
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 40,
                       ),
                       Center(
                         child: Wrap(
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
                             SizedBox(
-                              height: 50,
-                              width: 200,
+                              height: 60,
+                              width: 400,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: primaryColor,
                                   // padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                                   shape: RoundedRectangleBorder(
                                     borderRadius:
-                                        BorderRadius.circular(25),
+                                        BorderRadius.circular(30),
                                   ),
                                 ),
                                 onPressed: () {
@@ -78,6 +78,7 @@ class _SplashPageState extends State<SplashPage> {
                                       .bodyLarge!
                                       .copyWith(
                                         color: Colors.white,
+                                        fontSize: 17
                                       ),
                                 ),
                               ),
