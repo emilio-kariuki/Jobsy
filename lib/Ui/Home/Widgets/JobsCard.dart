@@ -67,240 +67,242 @@ class _JobCardState extends State<JobCard> {
           color: secondaryColor,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Stack(
+        child: Column(
           children: [
-            Column(
-              children: [
-                BlocBuilder<ShowDetailsBloc, ShowDetailsState>(
-                  builder: (context, state) {
-                    return ImageNetwork(
-                      image: widget.image,
-                      height: 130,
-                      width: MediaQuery.of(context).size.width / 4,
-                      duration: 10,
-                      onPointer: true,
-                      debugPrint: false,
-                      fullScreen: false,
-                      onLoading: const CircularProgressIndicator(
-                        color: Colors.indigoAccent,
-                      ),
-                      onError: const Icon(
-                        Icons.error,
-                        color: Colors.red,
-                      ),
-                      onTap: () {
-                        state is ShowDetailsInitial
-                            ? BlocProvider.of<ShowDetailsBloc>(context)
-                                .add(ShowDetailsPressed(id: widget.jobId))
-                            : BlocProvider.of<ShowDetailsBloc>(context).add(
-                                RemoveDetailsPressed(),
-                              );
-                      },
-                      imageCache: CachedNetworkImageProvider(widget.image),
-                    );
-
-                    // return CachedNetworkImage(
-                    //   height: 130,
-                    //   width: MediaQuery.of(context).size.width / 4,
-                    //   imageUrl: widget.image,
-                    //   fit: BoxFit.cover,
-                    //   imageBuilder: (context, imageProvider) {
-                    //     return Container(
-                    //       decoration: BoxDecoration(
-                    //         image: DecorationImage(
-                    //           image: imageProvider,
-                    //           fit: BoxFit.cover,
-                    //         ),
-                    //       ),
-                    //     );
-                    //   },
-                    //   placeholder: (context, url) => const Center(
-                    //     child: CircularProgressIndicator(
-                    //       strokeWidth: 3,
-                    //     ),
-                    //   ),
-                    //   errorWidget: (context, url, error) => const Icon(
-                    //     Icons.error,
-                    //     color: Colors.red,
-                    //     size: 18,
-                    //   ),
-                    // );
+            BlocBuilder<ShowDetailsBloc, ShowDetailsState>(
+              builder: (context, state) {
+                return ImageNetwork(
+                  image: widget.image,
+                  height: 130,
+                  width: MediaQuery.of(context).size.width / 4,
+                  duration: 10,
+                  onPointer: true,
+                  debugPrint: false,
+                  fullScreen: false,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  ),
+                  onLoading: const CircularProgressIndicator(
+                    color: Colors.indigoAccent,
+                  ),
+                  onError: const Icon(
+                    Icons.error,
+                    color: Colors.red,
+                  ),
+                  onTap: () {
+                    state is ShowDetailsInitial
+                        ? BlocProvider.of<ShowDetailsBloc>(context)
+                            .add(ShowDetailsPressed(id: widget.jobId))
+                        : BlocProvider.of<ShowDetailsBloc>(context).add(
+                            RemoveDetailsPressed(),
+                          );
                   },
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  imageCache: CachedNetworkImageProvider(widget.image),
+                );
+
+                // return CachedNetworkImage(
+                //   height: 130,
+                //   width: MediaQuery.of(context).size.width / 4,
+                //   imageUrl: widget.image,
+                //   fit: BoxFit.cover,
+                //   imageBuilder: (context, imageProvider) {
+                //     return Container(
+                //       decoration: BoxDecoration(
+                //         image: DecorationImage(
+                //           image: imageProvider,
+                //           fit: BoxFit.cover,
+                //         ),
+                //       ),
+                //     );
+                //   },
+                //   placeholder: (context, url) => const Center(
+                //     child: CircularProgressIndicator(
+                //       strokeWidth: 3,
+                //     ),
+                //   ),
+                //   errorWidget: (context, url, error) => const Icon(
+                //     Icons.error,
+                //     color: Colors.red,
+                //     size: 18,
+                //   ),
+                // );
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () async {
-                                  return showDialog<void>(
-                                      context: context,
-                                      barrierDismissible: true,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          content: SizedBox(
-                                            height: 300,
-                                            width: 250,
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                ImageNetwork(
-                                                  image: widget.userImage,
-                                                  height: 40,
-                                                  width: 40,
-                                                  duration: 10,
-                                                  onPointer: true,
-                                                  debugPrint: false,
-                                                  fullScreen: false,
-                                                  onLoading:
-                                                      const CircularProgressIndicator(
-                                                    color: Colors.indigoAccent,
-                                                  ),
-                                                  onError: const Icon(
-                                                    Icons.error,
-                                                    color: Colors.red,
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                  widget.userName,
-                                                  style: const TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 18),
-                                                ),
-                                                Text(
-                                                  widget.userRole,
-                                                  style: const TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 13),
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                FutureBuilder<UserModel>(
-                                                    future:
-                                                        FirebaseAuthentication()
-                                                            .getUser(
-                                                                userId: widget
-                                                                    .belongsTo),
-                                                    builder:
-                                                        (context, snapshot) {
-                                                      if (snapshot.hasData) {
-                                                        return Text(
-                                                          snapshot.data?.bio ??
-                                                              "",
-                                                          style: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .bodyLarge!
-                                                              .copyWith(
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontSize: 11),
-                                                        );
-                                                      }
-                                                      return const CircularProgressIndicator();
-                                                    }),
-                                              ],
+                          GestureDetector(
+                            onTap: () async {
+                              return showDialog<void>(
+                                  context: context,
+                                  barrierDismissible: true,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      content: SizedBox(
+                                        height: 300,
+                                        width: 250,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            ImageNetwork(
+                                              image: widget.userImage,
+                                              height: 40,
+                                              width: 40,
+                                              duration: 10,
+                                              onPointer: true,
+                                              debugPrint: false,
+                                              fullScreen: false,
+                                              onLoading:
+                                                  const CircularProgressIndicator(
+                                                color: Colors.indigoAccent,
+                                              ),
+                                              onError: const Icon(
+                                                Icons.error,
+                                                color: Colors.red,
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      });
-                                },
-                                child: ImageNetwork(
-                                  image: widget.userImage,
-                                  height: 30,
-                                  width: 30,
-                                  duration: 10,
-                                  onPointer: true,
-                                  debugPrint: false,
-                                  fullScreen: false,
-                                  borderRadius: BorderRadius.circular(100),
-                                  onLoading: const CircularProgressIndicator(
-                                    color: Colors.indigoAccent,
-                                  ),
-                                  onError: const Icon(
-                                    Icons.error,
-                                    color: Colors.red,
-                                  ),
-                                ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              widget.userName,
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18),
+                                            ),
+                                            Text(
+                                              widget.userRole,
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 13),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            FutureBuilder<UserModel>(
+                                                future: FirebaseAuthentication()
+                                                    .getUser(
+                                                        userId:
+                                                            widget.belongsTo),
+                                                builder: (context, snapshot) {
+                                                  if (snapshot.hasData) {
+                                                    return Text(
+                                                      snapshot.data?.bio ?? "",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyLarge!
+                                                          .copyWith(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 11),
+                                                    );
+                                                  }
+                                                  return const CircularProgressIndicator();
+                                                }),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  });
+                            },
+                            child: ImageNetwork(
+                              image: widget.userImage,
+                              height: 30,
+                              width: 30,
+                              duration: 10,
+                              onPointer: true,
+                              debugPrint: false,
+                              fullScreen: false,
+                              borderRadius: BorderRadius.circular(100),
+                              onLoading: const CircularProgressIndicator(
+                                color: Colors.indigoAccent,
+                              ),
+                              onError: const Icon(
+                                Icons.error,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.userName,
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 12),
                               ),
                               const SizedBox(
-                                width: 10,
+                                height: 1,
                               ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    widget.userName,
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 12),
-                                  ),
-                                  const SizedBox(
-                                    height: 1,
-                                  ),
-                                  Text(
-                                    widget.userRole,
-                                    style: const TextStyle(
-                                        color: Colors.white54, fontSize: 11),
-                                  ),
-                                ],
-                              )
+                              Text(
+                                widget.userRole,
+                                style: const TextStyle(
+                                    color: Colors.white54, fontSize: 11),
+                              ),
                             ],
-                          ),
-                          Text(
-                            // ignore: unrelated_type_equality_checks
-                            Timestamp.now()
-                                        .toDate()
-                                        .difference(widget.time.toDate())
-                                        .inDays ==
-                                    0
-                                ? "Today"
-                                : Timestamp.now()
-                                            .toDate()
-                                            .difference(widget.time.toDate())
-                                            .inDays ==
-                                        1
-                                    ? "Yesterday"
-                                    : "${Timestamp.now().toDate().difference(widget.time.toDate()).inDays} days ago",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(color: Colors.white54, fontSize: 11),
                           )
                         ],
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Text(
+                        // ignore: unrelated_type_equality_checks
+                        Timestamp.now()
+                                    .toDate()
+                                    .difference(widget.time.toDate())
+                                    .inDays ==
+                                0
+                            ? "Today"
+                            : Timestamp.now()
+                                        .toDate()
+                                        .difference(widget.time.toDate())
+                                        .inDays ==
+                                    1
+                                ? "Yesterday"
+                                : "${Timestamp.now().toDate().difference(widget.time.toDate()).inDays} days ago",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(color: Colors.white54, fontSize: 11),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
                         children: [
                           Text(
                             widget.title,
                             overflow: TextOverflow.clip,
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 18),
+                          ),
+                          const SizedBox(
+                            height: 5,
                           ),
                           Text(
                             "\$${widget.amount}",
@@ -309,93 +311,91 @@ class _JobCardState extends State<JobCard> {
                           )
                         ],
                       ),
-                      const SizedBox(
-                        height: 10,
+                      BlocBuilder<FavouritesBloc, FavouritesState>(
+                        builder: (context, state) {
+                          return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                          onTap: () async {
+                            BlocProvider.of<FavouritesBloc>(context)
+                                .add(FavouriteAdded(
+                                    job: JobModel(
+                                      name: widget.title,
+                                      description: widget.description,
+                                      image: widget.image,
+                                      location: widget.location,
+                                      createdAt: Timestamp.now(),
+                                      amount: widget.amount,
+                                      belongsTo: FirebaseAuth
+                                          .instance.currentUser!.uid,
+                                      userImage:
+                                          await SharedPreferencesManager()
+                                              .getUserImage(),
+                                      userName:
+                                          await SharedPreferencesManager()
+                                              .getUserName(),
+                                      userRole:
+                                          await SharedPreferencesManager()
+                                              .getRole(),
+                                    ),
+                                    context: context));
+                          },
+                          child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: primaryColor,
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Icon(
+                                Icons.favorite,
+                                color: state is FavouritesInitial ||
+                                        state is FavouriteRemovedSuccess
+                                    ? Colors.white
+                                    : Colors.red,
+                                size: 20,
+                              )),
+                          ),
+                          );
+                        },
                       ),
-                      SizedBox(
-                        height: 55,
-                        child: Text(
-                          widget.description,
-                          overflow: TextOverflow.clip,
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 12),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      // Row(
-                      //   children: [
-                      //     const Icon(
-                      //       Icons.location_on,
-                      //       color: Colors.white54,
-                      //       size: 15,
-                      //     ),
-                      //     const SizedBox(
-                      //       width: 5,
-                      //     ),
-                      //     Text(
-                      //       location,
-                      //       style: Theme.of(context)
-                      //           .textTheme
-                      //           .bodyLarge!
-                      //           .copyWith(color: Colors.white54, fontSize: 11),
-                      //     )
-                      //   ],
-                      // ),
                     ],
                   ),
-                )
-              ],
-            ),
-            BlocBuilder<FavouritesBloc, FavouritesState>(
-              builder: (context, state) {
-                return Positioned.fill(
-                    child: Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: () async {
-                        BlocProvider.of<FavouritesBloc>(context)
-                            .add(FavouriteAdded(
-                                job: JobModel(
-                                  name: widget.title,
-                                  description: widget.description,
-                                  image: widget.image,
-                                  location: widget.location,
-                                  createdAt: Timestamp.now(),
-                                  amount: widget.amount,
-                                  belongsTo:
-                                      FirebaseAuth.instance.currentUser!.uid,
-                                  userImage: await SharedPreferencesManager()
-                                      .getUserImage(),
-                                  userName: await SharedPreferencesManager()
-                                      .getUserName(),
-                                  userRole: await SharedPreferencesManager()
-                                      .getRole(),
-                                ),
-                                context: context));
-                      },
-                      child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: primaryColor,
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Icon(
-                            Icons.favorite,
-                            color: state is FavouritesInitial ||
-                                    state is FavouriteRemovedSuccess
-                                ? Colors.white
-                                : Colors.red,
-                            size: 20,
-                          )),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    height: 55,
+                    child: Text(
+                      widget.description,
+                      overflow: TextOverflow.clip,
+                      style: const TextStyle(color: Colors.white, fontSize: 12),
                     ),
                   ),
-                ));
-              },
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  // Row(
+                  //   children: [
+                  //     const Icon(
+                  //       Icons.location_on,
+                  //       color: Colors.white54,
+                  //       size: 15,
+                  //     ),
+                  //     const SizedBox(
+                  //       width: 5,
+                  //     ),
+                  //     Text(
+                  //       location,
+                  //       style: Theme.of(context)
+                  //           .textTheme
+                  //           .bodyLarge!
+                  //           .copyWith(color: Colors.white54, fontSize: 11),
+                  //     )
+                  //   ],
+                  // ),
+                ],
+              ),
             ),
           ],
         ),
