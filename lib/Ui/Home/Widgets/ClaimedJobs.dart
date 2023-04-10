@@ -42,7 +42,7 @@ class ClaimedJobs extends StatelessWidget {
             if (snapshot.hasData) {
               final docs = snapshot.data;
               out = SizedBox(
-                height: MediaQuery.of(context).size.height * 0.45,
+                 height: MediaQuery.of(context).size.height * 0.45,
                 width: MediaQuery.of(context).size.width * 0.7,
                 child: ListView.builder(
                   itemCount: docs!.length,

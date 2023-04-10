@@ -5,6 +5,7 @@ import 'package:jobsy_flutter/Blocs/Favourite/favourites_bloc.dart';
 import 'package:jobsy_flutter/Firebase/Authentication.dart';
 import 'package:jobsy_flutter/Model/UserModel.dart';
 import 'package:jobsy_flutter/Ui/Utilities/ColorConstants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 enum menuValues { edit, delete }
 
@@ -135,20 +136,33 @@ Column(
                   const SizedBox(
                     height: 30,
                   ),
-                  Container(
-                    height: 50,
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: 200,
-                    decoration: BoxDecoration(
-                        color: primaryColor,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: const Center(
-                      child: Text("Contact",
-                          style: TextStyle(
-                            fontSize: 17,
-                            color: Colors.white,
-                            fontWeight: FontWeight.normal,
-                          )),
+                  Semantics(
+                    button: true,
+                    child: InkWell(
+                      onTap: () async{
+                         String url = "mail:emilio113kariuki@gmail.com";
+                          if (await canLaunchUrl(Uri.parse(url))) {
+                            await launchUrl(Uri.parse(url));
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                      },
+                      child: Container(
+                        height: 50,
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        width: 200,
+                        decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: const Center(
+                          child: Text("Contact",
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.white,
+                                fontWeight: FontWeight.normal,
+                              )),
+                        ),
+                      ),
                     ),
                   ),
 
