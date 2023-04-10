@@ -1,15 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_network/image_network.dart';
 import 'package:jobsy_flutter/Blocs/Favourite/favourites_bloc.dart';
 import 'package:jobsy_flutter/Firebase/Authentication.dart';
-import 'package:jobsy_flutter/Model/JobDetailsModel.dart';
 import 'package:jobsy_flutter/Model/UserModel.dart';
 import 'package:jobsy_flutter/Ui/Utilities/ColorConstants.dart';
-import 'package:keep_keyboard_popup_menu/keep_keyboard_popup_menu.dart';
 
 enum menuValues { edit, delete }
 
@@ -40,17 +35,19 @@ class ClaimedJobsCard extends StatelessWidget {
       required this.claimedBy});
 
   @override
+    @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => FavouritesBloc(),
       child: Container(
-        // padding: const EdgeInsets.only(),
-        height: 250,
+        
+        width: 250,
         decoration: BoxDecoration(
           color: secondaryColor,
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(10),
         ),
-        child: Column(
+        child: 
+Column(
           children: [
             ImageNetwork(
               image: image,
@@ -60,6 +57,9 @@ class ClaimedJobsCard extends StatelessWidget {
               onPointer: true,
               debugPrint: false,
               fullScreen: false,
+              borderRadius:const BorderRadius.only(
+                  topLeft: Radius.circular(10), topRight: Radius.circular(10)
+              ),
               onLoading: const CircularProgressIndicator(
                 color: Colors.indigoAccent,
               ),
@@ -128,6 +128,7 @@ class ClaimedJobsCard extends StatelessWidget {
                     child: Text(
                       description,
                       overflow: TextOverflow.clip,
+                      maxLines:4,
                       style: const TextStyle(color: Colors.white, fontSize: 12),
                     ),
                   ),
@@ -137,12 +138,12 @@ class ClaimedJobsCard extends StatelessWidget {
                   Container(
                     height: 50,
                     margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: double.infinity,
+                    width: 200,
                     decoration: BoxDecoration(
                         color: primaryColor,
                         borderRadius: BorderRadius.circular(5)),
                     child: const Center(
-                      child: Text("Assign",
+                      child: Text("Contact",
                           style: TextStyle(
                             fontSize: 17,
                             color: Colors.white,
@@ -179,3 +180,4 @@ class ClaimedJobsCard extends StatelessWidget {
     );
   }
 }
+
