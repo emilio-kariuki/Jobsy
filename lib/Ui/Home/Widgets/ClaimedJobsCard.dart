@@ -115,9 +115,9 @@ Column(
                         style:
                             const TextStyle(color: Colors.white, fontSize: 18),
                       ),
-                      const Text(
-                        "\$",
-                        style: TextStyle(color: Colors.white54, fontSize: 12),
+                       Text(
+                        "\$ $amount",
+                        style:const  TextStyle(color: Colors.white54, fontSize: 12),
                       )
                     ],
                   ),
@@ -153,7 +153,7 @@ Column(
                         width: 200,
                         decoration: BoxDecoration(
                             color: primaryColor,
-                            borderRadius: BorderRadius.circular(5)),
+                            borderRadius: BorderRadius.circular(20)),
                         child: const Center(
                           child: Text("Contact",
                               style: TextStyle(
