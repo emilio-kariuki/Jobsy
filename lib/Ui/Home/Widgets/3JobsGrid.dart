@@ -48,6 +48,7 @@ class Jobs3Grid extends StatelessWidget {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     mainAxisSpacing: 20,
                     crossAxisSpacing: 10,
+                    childAspectRatio: 0.9,
                     crossAxisCount: Responsive.isDesktop(context) ? 4 : 3,
                   ),
                   itemBuilder: (context, index) {
