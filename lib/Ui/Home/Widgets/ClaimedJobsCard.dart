@@ -140,7 +140,7 @@ Column(
                     button: true,
                     child: InkWell(
                       onTap: () async{
-                         String url = "mail:emilio113kariuki@gmail.com";
+                         String url = "mailto:emilio113kariuki@gmail.com";
                           if (await canLaunchUrl(Uri.parse(url))) {
                             await launchUrl(Uri.parse(url));
                           } else {
