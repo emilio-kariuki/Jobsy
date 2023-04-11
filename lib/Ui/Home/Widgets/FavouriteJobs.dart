@@ -5,7 +5,7 @@ import 'package:jobsy_flutter/Ui/Home/Widgets/FavouriteJobsCard.dart';
 import 'package:jobsy_flutter/Ui/Home/Widgets/PostedJobsCard.dart';
 import 'package:jobsy_flutter/Ui/Utilities/ColorConstants.dart';
 
-enum menuValues { edit, delete }
+enum menuValues {delete }
 
 class FavouriteJobs extends StatefulWidget {
   const FavouriteJobs({

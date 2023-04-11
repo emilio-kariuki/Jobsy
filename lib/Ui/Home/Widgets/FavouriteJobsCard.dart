@@ -7,7 +7,7 @@ import 'package:jobsy_flutter/Firebase/Job.dart';
 import 'package:jobsy_flutter/Model/UserModel.dart';
 import 'package:jobsy_flutter/Ui/Utilities/ColorConstants.dart';
 
-enum menuValues { edit, delete }
+enum menuValues { delete }
 
 class FavouriteJobCard extends StatelessWidget {
   final String image;
@@ -225,9 +225,7 @@ class FavouriteJobCard extends StatelessWidget {
                               FirebaseJob().deleteFavouriteJob(index: index);
 
                               break;
-                            case menuValues.edit:
-                              debugPrint("Edit");
-                              break;
+                            
                           }
                         },
                         child: const Icon(
@@ -236,13 +234,7 @@ class FavouriteJobCard extends StatelessWidget {
                           size: 20,
                         ),
                         itemBuilder: (context) => [
-                          const PopupMenuItem(
-                            value: menuValues.edit,
-                            child: Text(
-                              "Edit",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
+                          
                           const PopupMenuItem(
                             value: menuValues.delete,
                             child: Text(
