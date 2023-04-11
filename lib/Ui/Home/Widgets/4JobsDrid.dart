@@ -375,7 +375,7 @@ class JobsGrid extends StatelessWidget {
                                                       
                                                       _onWidgetDidBuild(
                                                           () async {
-                                                            Navigator.of(context);
+                                                            
                                                         ScaffoldMessenger.of(
                                                                 context)
                                                             .showSnackBar(
@@ -394,6 +394,7 @@ class JobsGrid extends StatelessWidget {
                                                                 Colors.green,
                                                           ),
                                                         );
+                                                        Navigator.of(context);
                                                       });
                                                     } else if (state
                                                         is ApplyJobFailure) {
@@ -497,7 +498,12 @@ class JobsGrid extends StatelessWidget {
                                                               ))
                                                             : Container();
 
-                                                        await FirebaseJob()
+                                                        state.job.belongsTo !=
+                                                                FirebaseAuth
+                                                                    .instance
+                                                                    .currentUser!
+                                                                    .uid
+                                                            ? await FirebaseJob()
                                                             .applyJob(
                                                           appliedBy:
                                                               FirebaseAuth
@@ -529,7 +535,7 @@ class JobsGrid extends StatelessWidget {
                                                             belongsTo: state
                                                                 .job.belongsTo,
                                                           ),
-                                                        );
+                                                        ) : Container();
                                                       },
                                                       child: Center(
                                                         child: Text(
