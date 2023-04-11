@@ -223,7 +223,7 @@ class AppliedJobsCard extends StatelessWidget {
                           switch (value) {
                             case menuValues.delete:
                               FirebaseJob().deleteAppliedJob(
-                                  index: index, otherId: appliedBy);
+                                  index: index, otherId: belongsTo);
 
                               break;
                             case menuValues.edit:
